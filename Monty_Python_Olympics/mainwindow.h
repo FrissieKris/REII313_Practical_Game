@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "gamescene.h"
+#include "player.h"
 
 class MainWindow : public QMainWindow
 {
@@ -10,5 +12,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+
+private:
+    GameScene *scene;
 };
 #endif // MAINWINDOW_H
