@@ -13,7 +13,7 @@ GameScene::GameScene()
     localPlayer = new Player();
     remotePlayer = new Player();
 
-    setSceneRect(0, 0, 2000, 600);
+
 
 
 
@@ -59,30 +59,32 @@ GameScene::GameScene()
 void GameScene::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Right)
-        localPlayer->setState(Player::MovingRight);
+        localPlayer->movement.right = true;
+        //localPlayer->setState(Player::MovingRight);
 
     else if (e->key() == Qt::Key_Left)
-        localPlayer->setState(Player::MovingLeft);
+        localPlayer->movement.left = true;
 
     else if (e->key() == Qt::Key_Up)
-        localPlayer->setState(Player::MovingUp);
+        localPlayer->movement.up = true;
 
     else if (e->key() == Qt::Key_Down)
-        localPlayer->setState(Player::MovingDown);
+        localPlayer->movement.down = true;
+
 
 }
 
 void GameScene::keyReleaseEvent(QKeyEvent *e)
 {
-    if (e->key() == Qt::Key_Left || e->key() == Qt::Key_Right)
-    {
-        localPlayer->setState(Player::Idle);
+    if (e->key() == Qt::Key_Up)
+        localPlayer->movement.up = false;
 
-    }
+    if (e->key() == Qt::Key_Down)
+        localPlayer->movement.down = false;
 
-    if (e->key() == Qt::Key_Up || e->key() == Qt::Key_Down)
-    {
-         localPlayer->setState(Player::Idle);
-    }
+    if (e->key() == Qt::Key_Left)
+        localPlayer->movement.left = false;
 
+    if (e->key() == Qt::Key_Right)
+        localPlayer->movement.right = false;
 }

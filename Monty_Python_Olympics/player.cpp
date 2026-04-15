@@ -2,7 +2,7 @@
 #include <QDebug>
 
 Player::Player()
-    : sprite(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 3),
+    : sprite(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 0, 1),
         velocity(0, 0)
   {
       setPixmap(sprite.getCurrentFrame());
@@ -48,27 +48,100 @@ void Player::advance(int step)
 
     QPointF vel(0, 0);
 
-    switch(state)
+    if (movement.left)
     {
-        case MovingLeft:
         vel.setX(-speed);
-        break;
+        state = MovingLeft;
 
-        case MovingRight:
-        vel.setX(speed);
-        break;
-
-        case MovingUp:
-        vel.setY(-speed);
-        break;
-
-        case MovingDown:
-        vel.setY(speed);
-        break;
-
-        default:
-        break;
     }
+    if (movement.right)
+    {
+        vel.setX(speed);
+        state = MovingRight;
+    }
+
+    if (movement.up)
+    {
+        vel.setY(-speed);
+        state = MovingUp;
+    }
+
+    if (movement.down)
+    {
+        vel.setY(speed);
+        state = MovingDown;
+    }
+    if (!movement.left && !movement.right && !movement.down && !movement.up)
+        state = Idle;
+
+
+    if (prevstate != state)
+    {
+        switch(state)
+            {
+                case Idle:
+                sprite.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233,0, 1);
+                break;
+
+                case MovingLeft:
+                sprite.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233,2 , 3);
+                qDebug() << "working";
+                break;
+
+                case MovingRight:
+
+                break;
+
+                case MovingUp:
+                sprite.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 1, 3);
+                break;
+
+                case MovingDown:
+                sprite.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 0, 3);
+                break;
+
+
+                default:
+                break;
+            }
+
+
+
+
+
+    }
+
+    prevstate = state;
+
+
+
+//   switch(state)
+//    {
+//        case MovingLeft:
+
+//        break;
+
+//        case MovingRight:
+
+//        break;
+
+//        case MovingUp:
+
+//        break;
+
+//        case MovingDown:
+//        sprite.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 3);
+
+//        break;
+
+//        case Idle:
+//        sprite.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 1);
+//        break;
+
+
+//        default:
+//        break;
+//    }
 
     moveBy(vel.x(), vel.y());
 

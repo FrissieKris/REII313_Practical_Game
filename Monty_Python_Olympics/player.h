@@ -7,7 +7,6 @@
 
 
 
-
 class Player : public QGraphicsPixmapItem
 {
 public:
@@ -18,19 +17,27 @@ public:
         MovingLeft,
         MovingRight,
         MovingUp,
-        MovingDown
+        MovingDown,
+       // DiagTopRight,
+       // DiagTopLeft,
+        //DiagBottomRight,
+       // DiagBottomLeft
 
     };
 
+    struct MoveMent{
+        bool up = false;
+        bool down = false;
+        bool left = false;
+        bool right = false;
+    };
+
+    MoveMent movement;
 
     void setState(PlayerState newState);
 
 //    void keyPressEvent(QKeyEvent *e);
 //    void keyReleaseEvent(QKeyEvent *e);
-    void setMovingLeft(bool enabled);
-    void setMovingRight(bool enabled);
-    void setMovingUp(bool enabled);
-    void setMovingDown(bool enabled);
 
     protected:
     void advance(int step);
@@ -40,7 +47,10 @@ private:
     QPointF velocity;
     int frameTick = 0;
     PlayerState state = Idle;
+    PlayerState prevstate = Idle;
     float speed = 3.0;
+
+
 
 
 
