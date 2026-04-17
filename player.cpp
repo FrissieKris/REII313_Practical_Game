@@ -1,5 +1,6 @@
 #include "player.h"
 #include <QDebug>
+#include <QGraphicsScene>
 
 Player::Player()
     : player(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 0, 1),
@@ -7,27 +8,62 @@ Player::Player()
   {
       setPixmap(player.getCurrentFrame());
       qDebug() << player.getCurrentFrame().isNull();
+
   }
 
 
+//Player updates
 void Player::advance(int step)
 
 {
+    //Skip first one, as there are two checks done one at 0 and another at 1; 1 updates all
     if (!step) return;
 
     setState();
     updateAnim();
 
-    moveBy(velocity.x(), velocity.y());
+    collision();
 
-    frameTick++;
-    if (frameTick % 6 == 0)
-    {
-        player.updateFrame();
-        setPixmap(player.getCurrentFrame());
-    }
+//    QPointF nextPosX(pos().x(),pos().x()+ velocity.x());
+
+
+//    QList<QGraphicsItem*> hits = collidingItems();
+
+//    bool blocked = false;
+
+//    //Check collision with player
+//    for (QGraphicsItem* item : hits)
+//    {
+//        qDebug() << "Colliding with:" << item;
+//        Objects* obj = dynamic_cast<Objects*>(item);
+
+//        if (!obj)
+//            continue;
+
+//        if (obj->isSolid())
+//        {
+//            blocked = true;
+
+//        }
+
+//        obj->onCollision(this);
+//     }
+
+//        if (!blocked)
+//        {
+//            setPos(nextPos);
+//        }
+
+
+        frameTick++;
+        if (frameTick % 6 == 0)
+        {
+            player.updateFrame();
+            setPixmap(player.getCurrentFrame());
+        }
 }
 
+//Movement direction checker, uses true and false to check as keyboard input only read one input at a time
 void Player::setState()
 {
     velocity = QPointF(0, 0);
@@ -39,7 +75,6 @@ void Player::setState()
     if (movement.right)
     {
         velocity.setX(+speed);
-
     }
 
     if (movement.up)
@@ -64,6 +99,8 @@ void Player::setState()
     if ( velocity.y() != 0 && movement.increaseSpeed )
         velocity.setY(velocity.y()*2);
 
+
+    //Animation direction
     if (velocity == QPointF(0,0 ))
         state = Idle;
     else if (velocity.x() > 0)
@@ -77,6 +114,7 @@ void Player::setState()
 
 }
 
+//Update animation, might need to change the directories to strings and save them all in a struct
 void Player::updateAnim()
 {
     if (prevstate != state)
@@ -119,4 +157,109 @@ void Player::updateAnim()
 
     prevstate = state;
 
+}
+
+void Player::collision()
+{
+
+    QPointF oldPos = pos();
+    QPointF nextPosX(pos().x()+velocity.x(),pos().y());
+    setPos(nextPosX);
+
+    QList<QGraphicsItem*> hitsX = collidingItems();
+
+    bool blockedX = false;
+//Check collision with player in x direction
+    for (QGraphicsItem* item : hitsX)
+    {
+        Objects* obj = dynamic_cast<Objects*>(item);
+
+        if (!obj)
+            continue;
+
+        if (obj->isSolid())
+        {
+            blockedX = true;
+            if (velocity.x() > 0)
+            {
+                movement.right = false;
+                qDebug() << movement.right;
+            }
+
+            else if (velocity.y() < 0)
+            {
+                 movement.left = false;
+                 qDebug() << movement.left;
+            }
+
+        }
+
+        obj->onCollision(this);
+    }
+
+    //Revert position
+    setPos(oldPos);
+
+    //Apply movement if not blocked
+    if (!blockedX)
+    {
+        setPos(nextPosX);
+    }
+
+    oldPos = pos();
+
+    QPointF nextPosY(pos().x(),pos().y()+ velocity.y());
+    setPos(nextPosY);
+
+    QList<QGraphicsItem*> hitsY = collidingItems();
+
+    bool blockedY = false;
+
+
+    for (QGraphicsItem* item : hitsY)
+    {
+        qDebug() << "Colliding with:" << item;
+        Objects* obj = dynamic_cast<Objects*>(item);
+
+        if (!obj)
+            continue;
+
+        if (obj->isSolid())
+        {
+            blockedY = true;
+            if (velocity.y() > 0)
+            {
+                movement.down = false;
+                qDebug() << movement.down;
+            }
+
+            else if (velocity.y() < 0)
+            {
+                 movement.up = false;
+                 qDebug() << movement.up;
+            }
+
+        }
+
+        obj->onCollision(this);
+     }
+
+    setPos(oldPos);
+    if (!blockedY)
+    {
+        setPos(nextPosY);
+    }
+
+}
+
+QRectF Player::boundingRect() const
+{
+     return QRectF(0, 0, 160, 230);
+}
+
+QPainterPath Player::shape() const
+{
+    QPainterPath path;
+    path.addRect(0, 0, 80, 180); // same size as boundingRect
+    return path;
 }

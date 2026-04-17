@@ -1,5 +1,6 @@
 #include "gamescene.h"
 #include <QDebug>
+#include <QRandomGenerator>
 
 GameScene::GameScene()
 {
@@ -8,24 +9,43 @@ GameScene::GameScene()
     setSceneRect(0, 0, 2000, 600);
     setFocus();
     //setFocusItem(nullptr);
-    addRect(0, 500, 2000, 50, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
+    addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
+
+
 
     localPlayer = new Player();
     remotePlayer = new Player();
     tree = new Tree();
+    tree->setPos(0,600);
+
+    //Spawn the powerups, need to be done better
+    for (int i = 0; i < 10; i++)
+    {
+        Powerups* p = new Powerups();
+
+        int x = QRandomGenerator::global()->bounded(2000);
+        int y = QRandomGenerator::global()->bounded(600);
+
+        p->setPos(x, y);
+        addItem(p);
+    }
+
+
 
     qDebug() << "localPlayer:" << localPlayer;
 
 
     addItem(remotePlayer);
     addItem(tree);
+
     addItem(localPlayer);
 
-    QGraphicsRectItem *test = addRect(0, 0, 100, 100, QPen(Qt::red));
 
 
+
+
+    //Small window that follows with the player as he/she moves
     timer = new QTimer(this);
-
     connect(timer, &QTimer::timeout, this, [=]()
     {
         QGraphicsScene::advance();
@@ -43,14 +63,10 @@ GameScene::GameScene()
 
     timer->start(16);
 
-
-//    timer = new QTimer(this);
-//    connect(timer, &QTimer::timeout, this, &QGraphicsScene::advance);
-//    timer->start(16);
-
 }
 
 
+//Keyboard input, use true and false and then in Player class check if conditions are met
 void GameScene::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Right)
@@ -72,6 +88,7 @@ void GameScene::keyPressEvent(QKeyEvent *e)
 
 }
 
+//Release key for false
 void GameScene::keyReleaseEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Up)

@@ -21,12 +21,14 @@ public:
 
     MoveMent movement;
 
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
 
 //    void keyPressEvent(QKeyEvent *e);
 //    void keyReleaseEvent(QKeyEvent *e);
 
     protected:
-    void advance(int step);
+    void advance(int step) override;
 
 private:
 
@@ -51,6 +53,7 @@ private:
     float speed = 3.0;
     void setState();
     void updateAnim();
+    void collision();
 
 
 

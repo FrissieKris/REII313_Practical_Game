@@ -13,7 +13,9 @@ SOURCES += \
     gamescene.cpp \
     main.cpp \
     mainwindow.cpp \
+    objects.cpp \
     player.cpp \
+    powerups.cpp \
     sprite.cpp \
     tree.cpp
 
@@ -23,6 +25,7 @@ HEADERS += \
     mainwindow.h \
     objects.h \
     player.h \
+    powerups.h \
     sprite.h \
     tree.h
 

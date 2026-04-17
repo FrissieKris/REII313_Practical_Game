@@ -8,6 +8,8 @@
 #include <QKeyEvent>
 #include <QGraphicsView>
 #include "tree.h"
+#include "powerups.h"
+#include <QList>
 
 
 class GameScene : public QGraphicsScene
@@ -17,6 +19,7 @@ public:
     Player *localPlayer;
     Player *remotePlayer;
     Tree *tree;
+    Powerups *powerUp;
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -24,6 +27,9 @@ protected:
 
 private:
     QTimer *timer;
+    QList<Powerups*> powerUpsMap;
+
+
 
 
 };
