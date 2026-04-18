@@ -1,12 +1,11 @@
 #ifndef STAMINABAR_H
 #define STAMINABAR_H
 
-#include <QMainWindow>
-#include <QObject>
-#include <QWidget>
+#include <QGraphicsItem>
 #include <QPainter>
+#include <QStyleOptionGraphicsItem>
 
-class staminaBar: public QGraphicsItem
+class StaminaBar: public QGraphicsItem
 {
 public:
     staminaBar(QGraphicsItem* parent = nullptr);
@@ -14,7 +13,7 @@ public:
     void decrease(float amount);
     void increase(float amount);
     QRectF boundingRect() const override;
-    void paint(Qpainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 private:
     float currentValue = 100.0f;

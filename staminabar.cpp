@@ -1,6 +1,6 @@
 #include "staminabar.h"
 
-staminaBar::staminaBar()
-{
+//StaminaBar::StaminaBar()
+//{
 
-}
+//}
