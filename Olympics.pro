@@ -17,6 +17,7 @@ SOURCES += \
     player.cpp \
     powerups.cpp \
     sprite.cpp \
+    staminaBar.cpp \
     staminabar.cpp \
     tree.cpp
 
@@ -28,7 +29,8 @@ HEADERS += \
     player.h \
     powerups.h \
     sprite.h \
-    tree.h
+    tree.h \
+    staminabar.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

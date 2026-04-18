@@ -2,12 +2,11 @@
 #include "staminabar.h"
 #include <QDebug>
 #include <QRandomGenerator>
+#include <QtGlobal>
 
 
 GameScene::GameScene()
 {
-
-
     //setSceneRect(0, 0, 2000, 600); //Klaar declare in mainwindow.cpp
     setFocus();
     //setFocusItem(nullptr);
@@ -30,13 +29,16 @@ GameScene::GameScene()
     //All the stuffs for the Stamina bar
     //Creates 2 instances, one per player
 
-//    localStamina = new StaminaBar();
-//    addItem(localStamina);
-//    localStamina->setPos(50 , 20); //Can be adjusted later
+    localStaminaBar = new StaminaBar();
+    addItem(localStaminaBar);
+    localStaminaBar->setPos(50 , 30); //Can be adjusted later
 
-//    remoteStamina = new StaminaBar();
-//    addItem(remoteStamina);
-//    remoteStamina->SetPos(1050,20);
+    remoteStaminaBar = new StaminaBar();
+    addItem(remoteStaminaBar);
+    remoteStaminaBar->setPos(1050,30);
+
+    localPlayer->staminaBar = localStaminaBar;
+    localPlayer->staminaBar = remoteStaminaBar;
 
     //************************************************************************************************
 
@@ -52,19 +54,12 @@ GameScene::GameScene()
         addItem(p);
     }
 
-
-
     qDebug() << "localPlayer:" << localPlayer;
-
 
     addItem(remotePlayer);
     addItem(tree);
 
     addItem(localPlayer);
-
-
-
-
 
     //Small window that follows with the player as he/she moves
     timer = new QTimer(this);
@@ -123,6 +118,23 @@ void GameScene::keyPressEvent(QKeyEvent *e)
     case Qt::Key_M:  remotePlayer->movement.increaseSpeed = true; break; //Eers net M ingesit in plaas van space
     default: break;
     }
+
+    //----------------KeyPressTiming vir Stamina Bar---------------
+    if(e->key() == Qt::Key_Space)
+    {
+        //Chuck this in before the minigame to be added
+        if(localPlayer && localPlayer->staminaBar)
+        {
+            localPlayer->staminaBar->increase(15.0f);
+
+        }
+        if(remotePlayer && remotePlayer->staminaBar)
+        {
+            remotePlayer->staminaBar->increase(15.0f);
+        }
+    }
+
+    //--------------------------------------------------------------------------
 
 
     //-----------------------------------------------------------

@@ -10,6 +10,7 @@
 #include "tree.h"
 #include "powerups.h"
 #include <QList>
+#include "staminabar.h"
 
 
 class GameScene : public QGraphicsScene
@@ -28,9 +29,8 @@ protected:
 private:
     QTimer *timer;
     QList<Powerups*> powerUpsMap;
-
-
-
+    StaminaBar* localStaminaBar = nullptr;
+    StaminaBar* remoteStaminaBar = nullptr;
 
 };
 

@@ -2,12 +2,14 @@
 #include "staminabar.h"
 #include <QDebug>
 #include <QGraphicsScene>
-
+#include <QtGlobal>
+#include <cmath>
 
 Player::Player()
     : player(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 0, 1),
       velocity(0, 0)
 {
+    staminaBar = new StaminaBar();
     setPixmap(player.getCurrentFrame());
     qDebug() << player.getCurrentFrame().isNull();
 
@@ -28,10 +30,20 @@ void Player::advance(int step)
 
     //---------------Stamina Bar Implementation------------------------
 
-//    if(velocity.length() > baseSpeed)
-//    {
-//        staminaBar->decrease(0.05f * (velocity.length() / baseSpeed)); // scale with speed
-//    }
+    if(staminaBar)
+    {
+        float speedFactor = std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y()) / baseSpeed;
+        if(speedFactor > 1.0f)
+        {
+            staminaBar->decrease(0.08f * speedFactor);
+        }
+        if(velocity.isNull() && staminaBar->getValue() < 100.0f)
+        {
+            staminaBar->increase(0.03f);
+        }
+    }
+
+    //Sit die collision stamina penalty se stuffs hier
 
 
     //-----------------------------------------------------------------

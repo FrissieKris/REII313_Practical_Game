@@ -1,11 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-
 #include "sprite.h"
 #include "objects.h"
-
-
+#include "staminabar.h"
 
 class Player : public Objects
 {
@@ -18,6 +16,10 @@ public:
         bool right = false;
         bool increaseSpeed = false;
     };
+
+    StaminaBar* staminaBar = nullptr;
+
+    float baseSpeed = 5.0f; //change value stuffs
 
     MoveMent movement;
 
