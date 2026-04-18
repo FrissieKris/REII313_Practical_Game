@@ -50,6 +50,10 @@ void StaminaBar::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidg
 
     painter->setPen(Qt::white);
     painter->drawRect(0,0,200,20);
+
+    // Text label
+        painter->setPen(Qt::white);
+        painter->drawText(QRect(5, 0, 190, 20), Qt::AlignVCenter, QString("Stamina: %1%").arg(static_cast<int>(currentValue)));
 }
 
 float StaminaBar::getValue() const

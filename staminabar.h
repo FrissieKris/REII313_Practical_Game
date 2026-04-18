@@ -11,9 +11,11 @@ public:
     void setValue(float value); //0 - 100
     void decrease(float amount);
     void increase(float amount);
+    float getValue() const;
+
     QRectF boundingRect() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
-    float getValue() const;
+
 
 private:
     float currentValue = 100.0f;
