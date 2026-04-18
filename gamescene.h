@@ -10,6 +10,7 @@
 #include "tree.h"
 #include "powerups.h"
 #include <QList>
+#include "sand.h"
 
 
 class GameScene : public QGraphicsScene
@@ -20,6 +21,7 @@ public:
     Player *remotePlayer;
     Tree *tree;
     Powerups *powerUp;
+    Sand *sand;
 
 protected:
     void keyPressEvent(QKeyEvent *e);

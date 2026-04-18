@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QRandomGenerator>
 
+
 GameScene::GameScene()
 {
 
@@ -15,11 +16,22 @@ GameScene::GameScene()
 
     localPlayer = new Player();
     remotePlayer = new Player();
-    tree = new Tree();
-    tree->setPos(0,600);
+
+
+    for (int i = 0; i < 30; ++i)
+    {
+        for (int j = 0; j < 30; ++j)
+        {
+            sand = new Sand();
+            sand->setPos(32*i,32*j);
+            addItem(sand);
+        }
+
+    }
+    //sand->setPos(0,600);
 
     //Spawn the powerups, need to be done better
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; ++i)
     {
         Powerups* p = new Powerups();
 
@@ -32,11 +44,11 @@ GameScene::GameScene()
 
 
 
-    qDebug() << "localPlayer:" << localPlayer;
+    //qDebug() << "localPlayer:" << localPlayer;
 
 
     addItem(remotePlayer);
-    addItem(tree);
+    addItem(sand);
 
     addItem(localPlayer);
 
@@ -54,7 +66,7 @@ GameScene::GameScene()
         {
             //view->centerOn(localPlayer);
             QPointF c1 = localPlayer->pos();
-            QRectF r1(c1.x() - 200, c1.y() - 300, 400, 600);
+            QRectF r1(c1.x() - 100, c1.y() - 150, 200, 300);
 
 
             view->setSceneRect(r1);

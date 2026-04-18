@@ -4,7 +4,6 @@
 #include "sprite.h"
 #include "player.h"
 #include <QTimer>
-#include <QObject>
 #include <QGraphicsScene>
 
 class Powerups : public Objects
@@ -12,8 +11,11 @@ class Powerups : public Objects
 public:
     Powerups();
     bool isSolid() const override { return false; }
-    void onCollision(Objects* other) override;
+    //void onCollision(Objects* other) override;
     QRectF boundingRect() const override;
+    void applyEffect(class Player *player) override;
+    void advance(int step) override {}
+
 private:
     Sprite powerUp;
     QTimer *coolDown;

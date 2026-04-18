@@ -1,7 +1,9 @@
 <RCC>
-    <qresource prefix="/sprites">
-        <file>Sprites/top-down-game-3-animations-example.png</file>
-        <file>Needle/pixil-frame-0.png</file>
-        <file>Trees/Tree.png</file>
+    <qresource prefix="/Sprites">
+        <file>Sprites/Character/Character.png</file>
+        <file>Sprites/Sand/Sand.png</file>
+        <file>Sprites/Trees/Tree.png</file>
+        <file>Sprites/Needle/Needle.png</file>
+        <file>Sprites/Character/Char.png</file>
     </qresource>
 </RCC>

@@ -16,6 +16,7 @@ SOURCES += \
     objects.cpp \
     player.cpp \
     powerups.cpp \
+    sand.cpp \
     sprite.cpp \
     tree.cpp
 
@@ -26,6 +27,7 @@ HEADERS += \
     objects.h \
     player.h \
     powerups.h \
+    sand.h \
     sprite.h \
     tree.h
 
@@ -35,4 +37,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources.qrc
+    Resources.qrc

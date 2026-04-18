@@ -4,7 +4,7 @@
 
 #include "sprite.h"
 #include "objects.h"
-
+#include <QTimer>
 
 
 class Player : public Objects
@@ -17,8 +17,10 @@ public:
         bool left = false;
         bool right = false;
         bool increaseSpeed = false;
+        bool decreaseSpeed = false;
     };
 
+    QTimer speedTimer;
     MoveMent movement;
 
     QRectF boundingRect() const override;
@@ -54,6 +56,8 @@ private:
     void setState();
     void updateAnim();
     void collision();
+
+
 
 
 
