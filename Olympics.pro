@@ -17,6 +17,7 @@ SOURCES += \
     player.cpp \
     powerups.cpp \
     sprite.cpp \
+    staminabar.cpp \
     tree.cpp
 
 HEADERS += \

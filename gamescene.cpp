@@ -1,6 +1,8 @@
 #include "gamescene.h"
+#include "staminabar.h"
 #include <QDebug>
 #include <QRandomGenerator>
+
 
 GameScene::GameScene()
 {
@@ -17,6 +19,20 @@ GameScene::GameScene()
     remotePlayer = new Player();
     tree = new Tree();
     tree->setPos(0,600);
+    //***********************************************************************************
+
+    //All the stuffs for the Stamina bar
+    //Creates 2 instances, one per player
+
+//    localStamina = new staminaBar();
+//    addItem(localStamina);
+//    localStamina->setPos(50 , 20); //Can be adjusted later
+
+//    remoteStamina = new StaminaBar();
+//    addItem(remoteStamina);
+//    remoteStamina->SetPos(1050,20);
+
+    //************************************************************************************************
 
     //Spawn the powerups, need to be done better
     for (int i = 0; i < 10; i++)
@@ -53,11 +69,19 @@ GameScene::GameScene()
         for (auto view : views())
         {
             //view->centerOn(localPlayer);
-            QPointF c1 = localPlayer->pos();
-            QRectF r1(c1.x() - 200, c1.y() - 300, 400, 600);
+//            QPointF c1 = localPlayer->pos();
+//            QRectF r1(c1.x() - 200, c1.y() - 300, 400, 600);
 
 
-            view->setSceneRect(r1);
+//            view->setSceneRect(r1);
+//            Kan dalk hierdie vervang met hieronder vir slegs centering
+            if(localPlayer)
+            {
+                view->centerOn(localPlayer); //
+            }
+//            of hierdie vir net effense centering
+//            QPointF target = localPlayer->pos();
+//            view->setSceneRect(target.x()- 200, target.y() - 300,400,600);
        }
     });
 

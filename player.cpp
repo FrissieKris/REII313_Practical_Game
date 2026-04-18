@@ -24,6 +24,15 @@ void Player::advance(int step)
 
     collision();
 
+    //---------------Stamina Bar Implementation------------------------
+
+    if(velocity.length() > baseSpeed)
+    {
+        staminaBar->decrease(0.05f * (velocity.length() / baseSpeed)); // scale with speed
+    }
+
+
+    //-----------------------------------------------------------------
 //    QPointF nextPosX(pos().x(),pos().x()+ velocity.x());
 
 
