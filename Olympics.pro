@@ -18,6 +18,7 @@ SOURCES += \
     powerups.cpp \
     sprite.cpp \
     staminabar.cpp \
+    timingbar.cpp \
     tree.cpp
 
 HEADERS += \
@@ -28,6 +29,7 @@ HEADERS += \
     player.h \
     powerups.h \
     sprite.h \
+    timingbar.h \
     tree.h \
     staminabar.h
 
