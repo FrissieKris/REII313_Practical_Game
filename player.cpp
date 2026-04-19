@@ -244,6 +244,6 @@ QRectF Player::boundingRect() const
 QPainterPath Player::shape() const
 {
     QPainterPath path;
-    path.addRect(0, 0, 80, 180); // same size as boundingRect
+    path.addRect(0, 0, 80, 180);
     return path;
 }

@@ -1,32 +1,29 @@
-#ifndef SAND_H
-#define SAND_H
+#ifndef GRASS_H
+#define GRASS_H
 #include "objects.h"
 #include "sprite.h"
 #include <QPainter>
 
-
-class Sand : public Objects
+class Grass : public Objects
 {
 public:
-    Sand(int width, int height);
-
+    Grass(int width, int height);
 
     //void advance(int step) override;
     bool isSolid() const override { return false; }
    // void onCollision(Objects* other) override;
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
-    void applyEffect(class Player *player) override;
+    //void applyEffect(class Player *player) override;
+
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *,
                QWidget *) override;
-
 private:
-    Sprite sand;
+    Sprite grass;
     int width;
     int height;
     QPixmap tile;
-
 };
 
-#endif // SAND_H
+#endif // GRASS_H

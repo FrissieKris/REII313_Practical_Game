@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     enemy.cpp \
     gamescene.cpp \
+    grass.cpp \
     main.cpp \
     mainwindow.cpp \
     objects.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     enemy.h \
     gamescene.h \
+    grass.h \
     mainwindow.h \
     objects.h \
     player.h \

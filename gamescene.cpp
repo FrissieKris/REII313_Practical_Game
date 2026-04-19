@@ -13,22 +13,15 @@ GameScene::GameScene()
     addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
 
 
-
     localPlayer = new Player();
     remotePlayer = new Player();
 
 
-    for (int i = 0; i < 30; ++i)
-    {
-        for (int j = 0; j < 30; ++j)
-        {
-            sand = new Sand();
-            sand->setPos(32*i,32*j);
-            addItem(sand);
-        }
+    sand = new Sand(256*1000,256*1000);
 
-    }
-    //sand->setPos(0,600);
+    grass = new Grass(256*1000,256*1000);
+    grass->setPos(-256*1000,-256*1000);
+
 
     //Spawn the powerups, need to be done better
     for (int i = 0; i < 10; ++i)
@@ -47,10 +40,18 @@ GameScene::GameScene()
     //qDebug() << "localPlayer:" << localPlayer;
 
 
+    tree = new Tree();
+    tree->setPos(100,100);
+
+
     addItem(remotePlayer);
     addItem(sand);
+    addItem(grass);
+    addItem(tree);
 
     addItem(localPlayer);
+
+//    tree->setZValue(1000);
 
 
 

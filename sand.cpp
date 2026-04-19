@@ -2,11 +2,11 @@
 #include "player.h"
 #include <QTimer>
 
-Sand::Sand()
-    :sand(":/Sprites/Sprites/Sand/Sand.png", 32, 32, 0, 1)
+Sand::Sand(int w, int h)
+    :sand(":/Sprites/Sprites/Sand/Sand.png", 64, 64, 0, 1), width(w),height(h)
 {
 
-    setPixmap(sand.getCurrentFrame());
+    tile = sand.getCurrentFrame();
 
 }
 
@@ -21,12 +21,20 @@ void Sand::applyEffect(Player* player)
 
 QRectF Sand::boundingRect() const
 {
-     return QRectF(0, 0, 32, 32);
+     return QRectF(0, 0, width, height);
 }
 
 QPainterPath Sand::shape() const
 {
     QPainterPath path;
-    path.addRect(0, 0,  32, 32); // same size as boundingRect
+    path.addRect(boundingRect()); // same size as boundingRect
     return path;
 }
+
+void Sand::paint(QPainter *painter,
+                 const QStyleOptionGraphicsItem *,
+                 QWidget *)
+{
+    painter->drawTiledPixmap(boundingRect(), tile);
+}
+

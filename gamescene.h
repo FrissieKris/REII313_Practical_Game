@@ -11,6 +11,7 @@
 #include "powerups.h"
 #include <QList>
 #include "sand.h"
+#include "grass.h"
 
 
 class GameScene : public QGraphicsScene
@@ -22,6 +23,7 @@ public:
     Tree *tree;
     Powerups *powerUp;
     Sand *sand;
+    Grass *grass;
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -30,8 +32,6 @@ protected:
 private:
     QTimer *timer;
     QList<Powerups*> powerUpsMap;
-
-
 
 
 };

@@ -15,7 +15,7 @@ public:
     virtual ~Objects() = default;
 
 
-    virtual void advance(int step) override{};
+    virtual void advance(int step) {};
 
 
     virtual bool isSolid() const { return false; }

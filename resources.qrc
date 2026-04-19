@@ -4,6 +4,6 @@
         <file>Sprites/Sand/Sand.png</file>
         <file>Sprites/Trees/Tree.png</file>
         <file>Sprites/Needle/Needle.png</file>
-        <file>Sprites/Character/Char.png</file>
+        <file>Sprites/Grass/Grass.png</file>
     </qresource>
 </RCC>
