@@ -15,9 +15,15 @@ GameScene::GameScene()
 
     track = new Track(1920,1080*1000);
     track->setPos(0, -1080*1000);
+
+    barrier = new TrackBarrier(16,128*100);
+    barrier->setPos(-16, -128*100);
+
     localPlayer = new Player();
+    localPlayer->setPos(960,0);
+
     remotePlayer = new Player();
-    localPlayer->setPos(960,540);
+
    // sand = new Sand(256*1000,256*1000);
     grass = new Grass(256*1000,256*1000);
     grass->setPos(-256*1000,-256*1000);
@@ -29,8 +35,10 @@ GameScene::GameScene()
 
     addItem(remotePlayer);
     addItem(track);
+
     //addItem(sand);
     addItem(grass);
+    addItem(barrier);
     addItem(tree);
 
     //Spawn the powerups, need to be done better

@@ -20,6 +20,7 @@ SOURCES += \
     sand.cpp \
     sprite.cpp \
     track.cpp \
+    trackbarrier.cpp \
     tree.cpp
 
 HEADERS += \
@@ -33,6 +34,7 @@ HEADERS += \
     sand.h \
     sprite.h \
     track.h \
+    trackbarrier.h \
     tree.h
 
 # Default rules for deployment.
