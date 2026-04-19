@@ -32,7 +32,6 @@ GameScene::GameScene()
     tree = new Tree();
     tree->setPos(100,100);
 
-
     addItem(remotePlayer);
     addItem(track);
 
