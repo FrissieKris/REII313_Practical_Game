@@ -24,7 +24,9 @@ GameScene::GameScene()
 
     remotePlayer = new Player();
 
-   // sand = new Sand(256*1000,256*1000);
+    sand = new Sand(256*2,256*2);
+    sand->setPos(100, -30);
+
     grass = new Grass(256*1000,256*1000);
     grass->setPos(-256*1000,-256*1000);
 
@@ -35,7 +37,7 @@ GameScene::GameScene()
     addItem(remotePlayer);
     addItem(track);
 
-    //addItem(sand);
+    addItem(sand);
     addItem(grass);
     addItem(barrier);
     addItem(tree);
