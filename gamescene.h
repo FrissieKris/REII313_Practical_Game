@@ -10,6 +10,7 @@
 #include "tree.h"
 #include "powerups.h"
 #include <QList>
+#include "staminabar.h"
 #include "sand.h"
 #include "grass.h"
 #include "track.h"
@@ -36,7 +37,8 @@ protected:
 private:
     QTimer *timer;
     QList<Powerups*> powerUpsMap;
-
+    StaminaBar* localStaminaBar = nullptr;
+    StaminaBar* remoteStaminaBar = nullptr;
 
 };
 

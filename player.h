@@ -1,9 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-
 #include "sprite.h"
 #include "objects.h"
+#include "staminabar.h"
 #include <QTimer>
 
 
@@ -20,6 +20,10 @@ public:
         bool increaseSpeed = false;
         bool decreaseSpeed = false;
     };
+
+    StaminaBar* staminaBar = nullptr;
+
+    float baseSpeed = 5.0f; //change value stuffs
 
     QTimer speedTimer;
     MoveMent movement;
