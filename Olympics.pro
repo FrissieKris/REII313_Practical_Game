@@ -11,27 +11,36 @@ CONFIG += c++11
 SOURCES += \
     enemy.cpp \
     gamescene.cpp \
+    grass.cpp \
     main.cpp \
     mainwindow.cpp \
     objects.cpp \
     player.cpp \
     powerups.cpp \
+    sand.cpp \
     sprite.cpp \
     staminabar.cpp \
     timingbar.cpp \
+    track.cpp \
+    trackbarrier.cpp \
     tree.cpp
 
 HEADERS += \
     enemy.h \
     gamescene.h \
+    grass.h \
     mainwindow.h \
     objects.h \
     player.h \
     powerups.h \
+    sand.h \
     sprite.h \
     timingbar.h \
     tree.h \
     staminabar.h
+    track.h \
+    trackbarrier.h \
+    tree.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -39,4 +48,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources.qrc
+    Resources.qrc

@@ -4,6 +4,9 @@
 #include "sprite.h"
 #include "objects.h"
 #include "staminabar.h"
+#include <QTimer>
+
+
 
 class Player : public Objects
 {
@@ -15,12 +18,14 @@ public:
         bool left = false;
         bool right = false;
         bool increaseSpeed = false;
+        bool decreaseSpeed = false;
     };
 
     StaminaBar* staminaBar = nullptr;
 
     float baseSpeed = 5.0f; //change value stuffs
 
+    QTimer speedTimer;
     MoveMent movement;
 
     QRectF boundingRect() const override;
@@ -56,6 +61,8 @@ private:
     void setState();
     void updateAnim();
     void collision();
+
+
 
 
 

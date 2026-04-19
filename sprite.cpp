@@ -1,4 +1,5 @@
 #include "sprite.h"
+#include <QPainter>
 
 Sprite::Sprite()
 {
@@ -47,3 +48,5 @@ QPixmap Sprite::getCurrentFrame()
    return sheet.copy(x, y, frameWidth, frameHeight);
 
 }
+
+

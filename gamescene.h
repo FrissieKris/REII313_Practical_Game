@@ -11,6 +11,10 @@
 #include "powerups.h"
 #include <QList>
 #include "staminabar.h"
+#include "sand.h"
+#include "grass.h"
+#include "track.h"
+#include "trackbarrier.h"
 
 
 class GameScene : public QGraphicsScene
@@ -21,6 +25,10 @@ public:
     Player *remotePlayer;
     Tree *tree;
     Powerups *powerUp;
+    Sand *sand;
+    Grass *grass;
+    Track *track;
+    TrackBarrier *barrier;
 
 protected:
     void keyPressEvent(QKeyEvent *e);

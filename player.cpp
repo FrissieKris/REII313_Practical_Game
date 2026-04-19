@@ -6,14 +6,25 @@
 #include <cmath>
 
 Player::Player()
-    : player(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 0, 1),
-      velocity(0, 0)
-{
-    staminaBar = new StaminaBar();
+    : player(":/Sprites/Sprites/Character/Character.png", 128, 128, 0, 1),
+        velocity(0, 0)
+  {
+           staminaBar = new StaminaBar();
     setPixmap(player.getCurrentFrame());
     qDebug() << player.getCurrentFrame().isNull();
+      setPixmap(player.getCurrentFrame());
+      qDebug() << player.getCurrentFrame().isNull();
 
-}
+      speedTimer.setSingleShot(true);
+
+      connect(&speedTimer, &QTimer::timeout, this, [this]() {
+          if (movement.increaseSpeed == true)
+            movement.increaseSpeed = false;
+          else if (movement.decreaseSpeed == true)
+              movement.decreaseSpeed = false;
+      });
+
+  }
 
 
 //Player updates
@@ -143,6 +154,11 @@ void Player::setState()
 
     if ( velocity.y() != 0 && movement.increaseSpeed )
         velocity.setY(velocity.y()*2);
+    if ( velocity.y() != 0 && movement.decreaseSpeed)
+    {
+        velocity.setY(velocity.y()/2);
+        qDebug()<<"decreasespeed is"<<movement.decreaseSpeed;
+    }
 
 
     //Animation direction
@@ -167,33 +183,33 @@ void Player::updateAnim()
         switch(state)
         {
         case Idle:
-            player.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233,0, 1);
-            //sprite.getCurrentFrame();
-            break;
+        player.loadFrame(":/Sprites/Sprites/Character/Character.png", 128, 128, 0, 1);
+        //sprite.getCurrentFrame();
+        break;
 
         case MovingLeft:
-            player.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233,2 , 3);
-            qDebug() << "working";
-            player.getCurrentFrame();
-            break;
+        player.loadFrame(":/Sprites/Sprites/Character/Character.png", 128, 128, 2, 4);
+        qDebug() << "working";
+        player.getCurrentFrame();
+        break;
 
         case MovingRight:
-
-            break;
+        player.loadFrame(":/Sprites/Sprites/Character/Character.png", 128, 128, 1, 4);
+        break;
 
         case MovingUp:
-            player.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 1, 3);
-            //sprite.getCurrentFrame();
-            break;
+        player.loadFrame(":/Sprites/Sprites/Character/Character.png", 128, 128, 3, 4);
+        //sprite.getCurrentFrame();
+        break;
 
         case MovingDown:
-            player.loadFrame(":/sprites/Sprites/top-down-game-3-animations-example.png", 160, 233, 0, 3);
-            //sprite.getCurrentFrame();
-            break;
+        player.loadFrame(":/Sprites/Sprites/Character/Character.png", 128, 128, 0, 4);
+        //sprite.getCurrentFrame();
+        break;
 
 
         default:
-            break;
+        break;
         }
 
     }
@@ -208,14 +224,15 @@ void Player::collision()
 {
 
     QPointF oldPos = pos();
-    QPointF nextPosX(pos().x()+velocity.x(),pos().y());
-    setPos(nextPosX);
+    QPointF nextPos = oldPos + velocity;
+    setPos(nextPos);
 
-    QList<QGraphicsItem*> hitsX = collidingItems();
+    QList<QGraphicsItem*> hits = collidingItems();
 
-    bool blockedX = false;
-    //Check collision with player in x direction
-    for (QGraphicsItem* item : hitsX)
+    bool blocked = false;
+//Check collision with player in x direction
+    //Have to implement again
+    for (QGraphicsItem* item : hits)
     {
         Objects* obj = dynamic_cast<Objects*>(item);
 
@@ -224,76 +241,45 @@ void Player::collision()
 
         if (obj->isSolid())
         {
-            blockedX = true;
+            blocked = true;
             if (velocity.x() > 0)
             {
                 movement.right = false;
-                qDebug() << movement.right;
+
             }
 
-            else if (velocity.y() < 0)
+            else if (velocity.x() < 0)
             {
-                movement.left = false;
-                qDebug() << movement.left;
+                 movement.left = false;
+
+            }
+
+            if (velocity.y() < 0)
+            {
+                movement.down = false;
+
+            }
+            else if (velocity.y() > 0)
+            {
+                movement.up = false;
+
             }
 
         }
 
-        obj->onCollision(this);
+        obj->applyEffect(this);
     }
 
     //Revert position
     setPos(oldPos);
 
     //Apply movement if not blocked
-    if (!blockedX)
+    if (!blocked)
     {
-        setPos(nextPosX);
+        setPos(nextPos);
     }
 
     oldPos = pos();
-
-    QPointF nextPosY(pos().x(),pos().y()+ velocity.y());
-    setPos(nextPosY);
-
-    QList<QGraphicsItem*> hitsY = collidingItems();
-
-    bool blockedY = false;
-
-
-    for (QGraphicsItem* item : hitsY)
-    {
-        qDebug() << "Colliding with:" << item;
-        Objects* obj = dynamic_cast<Objects*>(item);
-
-        if (!obj)
-            continue;
-
-        if (obj->isSolid())
-        {
-            blockedY = true;
-            if (velocity.y() > 0)
-            {
-                movement.down = false;
-                qDebug() << movement.down;
-            }
-
-            else if (velocity.y() < 0)
-            {
-                movement.up = false;
-                qDebug() << movement.up;
-            }
-
-        }
-
-        obj->onCollision(this);
-    }
-
-    setPos(oldPos);
-    if (!blockedY)
-    {
-        setPos(nextPosY);
-    }
 
 }
 
@@ -305,6 +291,6 @@ QRectF Player::boundingRect() const
 QPainterPath Player::shape() const
 {
     QPainterPath path;
-    path.addRect(0, 0, 80, 180); // same size as boundingRect
+    path.addRect(40, 0, 80, 180);
     return path;
 }

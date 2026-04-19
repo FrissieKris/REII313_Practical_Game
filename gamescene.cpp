@@ -5,16 +5,24 @@
 #include <QtGlobal>
 
 
+
 GameScene::GameScene()
 {
     //setSceneRect(0, 0, 2000, 600); //Klaar declare in mainwindow.cpp
     setFocus();
     //setFocusItem(nullptr);
-    addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
+    //addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
 
 
+    track = new Track(1920,1080*1000);
+    track->setPos(0, -1080*1000);
+
+    barrier = new TrackBarrier(16,128*100);
+    barrier->setPos(-16, -128*100);
 
     localPlayer = new Player();
+    localPlayer->setPos(960,0);
+
     remotePlayer = new Player();
 
     //-------------------------Ek position die players hier----------------------
@@ -22,8 +30,6 @@ GameScene::GameScene()
     remotePlayer->setPos(700, 300);
     //---------------------------------------------------------------------------
 
-    tree = new Tree();
-    tree->setPos(0,600);
     //***********************************************************************************
 
     //All the stuffs for the Stamina bar
@@ -41,9 +47,24 @@ GameScene::GameScene()
     localPlayer->staminaBar = remoteStaminaBar;
 
     //************************************************************************************************
+   // sand = new Sand(256*1000,256*1000);
+    grass = new Grass(256*1000,256*1000);
+    grass->setPos(-256*1000,-256*1000);
+
+
+    tree = new Tree();
+    tree->setPos(100,100);
+
+    addItem(remotePlayer);
+    addItem(track);
+
+    //addItem(sand);
+    addItem(grass);
+    addItem(barrier);
+    addItem(tree);
 
     //Spawn the powerups, need to be done better
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; ++i)
     {
         Powerups* p = new Powerups();
 
@@ -58,6 +79,9 @@ GameScene::GameScene()
 
     addItem(remotePlayer);
     addItem(tree);
+
+
+    //qDebug() << "localPlayer:" << localPlayer;
 
     addItem(localPlayer);
 
@@ -76,15 +100,20 @@ GameScene::GameScene()
 
 //            view->setSceneRect(r1);
 //          --------Kan dalk hierdie vervang met hieronder vir slegs centering--------
-            if(localPlayer)
-            {
-                view->centerOn(localPlayer); //
-            }
+//             if(localPlayer)
+//             {
+//                 view->centerOn(localPlayer); //
+//             }
             //----------------------------------------------------------------------
 //            ------------of hierdie vir net effense centering--------------
 //            QPointF target = localPlayer->pos();
 //            view->setSceneRect(target.x()- 200, target.y() - 300,400,600);
             //--------------------------------------------------------------
+            QPointF c1 = localPlayer->pos();
+            QRectF r1(c1.x() - 100, c1.y() - 150, 200, 300);
+
+
+            view->setSceneRect(r1);
        }
     });
 

@@ -1,7 +1,7 @@
 #include "tree.h"
 
 Tree::Tree()
-    :tree(":/sprites/Trees/Tree.png", 256, 256, 0, 1)
+    :tree(":/Sprites/Sprites/Trees/Tree", 256, 256, 0, 1)
 {
 
     setPixmap(tree.getCurrentFrame());

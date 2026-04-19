@@ -13,6 +13,7 @@ public:
     bool isSolid() const override { return true; }
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
+    //void applyEffect(Player* player) override;
 
 private:
     Sprite tree;
