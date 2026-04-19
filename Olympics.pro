@@ -14,9 +14,11 @@ SOURCES += \
     grass.cpp \
     main.cpp \
     mainwindow.cpp \
+    ninjastar.cpp \
     objects.cpp \
     player.cpp \
     powerups.cpp \
+    projectilemovement.cpp \
     sand.cpp \
     sprite.cpp \
     track.cpp \
@@ -28,9 +30,11 @@ HEADERS += \
     gamescene.h \
     grass.h \
     mainwindow.h \
+    ninjastar.h \
     objects.h \
     player.h \
     powerups.h \
+    projectilemovement.h \
     sand.h \
     sprite.h \
     track.h \

@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-
+//#include <ninjastar.h>
 #include "sprite.h"
 #include "objects.h"
 #include <QTimer>
@@ -21,6 +21,11 @@ public:
         bool decreaseSpeed = false;
     };
 
+    bool isThrowing = false;
+
+
+    bool itemPickedUp;
+    void throwShuriken(QPointF target);
     QTimer speedTimer;
     MoveMent movement;
 
@@ -40,13 +45,15 @@ private:
         MovingLeft,
         MovingRight,
         MovingUp,
-        MovingDown,
+        MovingDown
+
        // DiagTopRight,
        // DiagTopLeft,
         //DiagBottomRight,
        // DiagBottomLeft
 
     };
+
 
     Sprite player;
     QPointF velocity;
@@ -57,8 +64,6 @@ private:
     void setState();
     void updateAnim();
     void collision();
-
-
 
 
 

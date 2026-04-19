@@ -8,5 +8,6 @@
         <file>Sprites/Track/Track.png</file>
         <file>Sprites/TrackBarrier/TrackBarrier.png</file>
         <file>Sprites/Banana/Banana.png</file>
+        <file>Sprites/NinjaStar/NinjaStar-Sheet.png</file>
     </qresource>
 </RCC>

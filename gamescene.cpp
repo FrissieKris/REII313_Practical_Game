@@ -34,6 +34,9 @@ GameScene::GameScene()
     tree = new Tree();
     tree->setPos(100,100);
 
+    ninjaStar = new NinjaStar();
+    ninjaStar->setPos(400,100);
+
     addItem(remotePlayer);
     addItem(track);
 
@@ -41,6 +44,7 @@ GameScene::GameScene()
     addItem(grass);
     addItem(barrier);
     addItem(tree);
+    addItem(ninjaStar);
 
     //Spawn the powerups, need to be done better
     for (int i = 0; i < 10; ++i)
@@ -52,6 +56,17 @@ GameScene::GameScene()
 
         p->setPos(x, y);
         addItem(p);
+    }
+
+    for (int i = 0; i < 10; ++i)
+    {
+        NinjaStar* s = new NinjaStar();
+
+        int x = QRandomGenerator::global()->bounded(2000);
+        int y = QRandomGenerator::global()->bounded(600);
+
+        s->setPos(x, y);
+        addItem(s);
     }
 
 
@@ -120,4 +135,11 @@ void GameScene::keyReleaseEvent(QKeyEvent *e)
         localPlayer->movement.right = false;
     if (e->key() == Qt::Key_Space)
         localPlayer->movement.increaseSpeed = false;
+}
+void GameScene::mousePressEvent(QGraphicsSceneMouseEvent *e)
+{
+    if (e->button() == Qt::LeftButton)
+    {
+        localPlayer->throwShuriken(e->scenePos());
+    }
 }
