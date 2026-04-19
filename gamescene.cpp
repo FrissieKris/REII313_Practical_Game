@@ -10,18 +10,28 @@ GameScene::GameScene()
     setSceneRect(0, 0, 2000, 600);
     setFocus();
     //setFocusItem(nullptr);
-    addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
+    //addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
 
 
+    track = new Track(1920,1080*1000);
+    track->setPos(0, -1080*1000);
     localPlayer = new Player();
     remotePlayer = new Player();
-
-
-    sand = new Sand(256*1000,256*1000);
-
+    localPlayer->setPos(960,540);
+   // sand = new Sand(256*1000,256*1000);
     grass = new Grass(256*1000,256*1000);
     grass->setPos(-256*1000,-256*1000);
 
+
+    tree = new Tree();
+    tree->setPos(100,100);
+
+
+    addItem(remotePlayer);
+    addItem(track);
+    //addItem(sand);
+    addItem(grass);
+    addItem(tree);
 
     //Spawn the powerups, need to be done better
     for (int i = 0; i < 10; ++i)
@@ -39,23 +49,7 @@ GameScene::GameScene()
 
     //qDebug() << "localPlayer:" << localPlayer;
 
-
-    tree = new Tree();
-    tree->setPos(100,100);
-
-
-    addItem(remotePlayer);
-    addItem(sand);
-    addItem(grass);
-    addItem(tree);
-
     addItem(localPlayer);
-
-//    tree->setZValue(1000);
-
-
-
-
 
     //Small window that follows with the player as he/she moves
     timer = new QTimer(this);

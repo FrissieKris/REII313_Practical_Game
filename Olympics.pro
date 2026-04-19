@@ -19,6 +19,7 @@ SOURCES += \
     powerups.cpp \
     sand.cpp \
     sprite.cpp \
+    track.cpp \
     tree.cpp
 
 HEADERS += \
@@ -31,6 +32,7 @@ HEADERS += \
     powerups.h \
     sand.h \
     sprite.h \
+    track.h \
     tree.h
 
 # Default rules for deployment.

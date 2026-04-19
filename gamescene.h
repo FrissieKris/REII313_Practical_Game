@@ -12,6 +12,7 @@
 #include <QList>
 #include "sand.h"
 #include "grass.h"
+#include "track.h"
 
 
 class GameScene : public QGraphicsScene
@@ -24,6 +25,7 @@ public:
     Powerups *powerUp;
     Sand *sand;
     Grass *grass;
+    Track *track;
 
 protected:
     void keyPressEvent(QKeyEvent *e);
