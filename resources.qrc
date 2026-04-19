@@ -7,5 +7,6 @@
         <file>Sprites/Grass/Grass.png</file>
         <file>Sprites/Track/Track.png</file>
         <file>Sprites/TrackBarrier/TrackBarrier.png</file>
+        <file>Sprites/Banana/Banana.png</file>
     </qresource>
 </RCC>
