@@ -78,7 +78,7 @@ GameScene::GameScene()
         addItem(p);
     }
 
-    qDebug() << "localPlayer:" << localPlayer;
+    //qDebug() << "localPlayer:" << localPlayer;
 
     addItem(remotePlayer);
     addItem(tree);

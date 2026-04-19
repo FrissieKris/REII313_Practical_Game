@@ -37,10 +37,10 @@ HEADERS += \
     sprite.h \
     timingbar.h \
     tree.h \
-    staminabar.h
+    staminabar.h \
     track.h \
-    trackbarrier.h \
-    tree.h
+    trackbarrier.h
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
