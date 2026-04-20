@@ -7,24 +7,24 @@
 
 Player::Player()
     : player(":/Sprites/Sprites/Character/Character.png", 128, 128, 0, 1),
-        velocity(0, 0)
-  {
-           staminaBar = new StaminaBar();
+      velocity(0, 0)
+{
+    staminaBar = new StaminaBar();
     setPixmap(player.getCurrentFrame());
     qDebug() << player.getCurrentFrame().isNull();
-      setPixmap(player.getCurrentFrame());
-      qDebug() << player.getCurrentFrame().isNull();
+    setPixmap(player.getCurrentFrame());
+    qDebug() << player.getCurrentFrame().isNull();
 
-      speedTimer.setSingleShot(true);
+    speedTimer.setSingleShot(true);
 
-      connect(&speedTimer, &QTimer::timeout, this, [this]() {
-          if (movement.increaseSpeed == true)
+    connect(&speedTimer, &QTimer::timeout, this, [this]() {
+        if (movement.increaseSpeed == true)
             movement.increaseSpeed = false;
-          else if (movement.decreaseSpeed == true)
-              movement.decreaseSpeed = false;
-      });
+        else if (movement.decreaseSpeed == true)
+            movement.decreaseSpeed = false;
+    });
 
-  }
+}
 
 
 //Player updates
@@ -53,6 +53,8 @@ void Player::advance(int step)
             staminaBar->increase(0.03f);
         }
     }
+    if (timingBar)
+        timingBar->advance(step);
 
     //Sit die collision stamina penalty se stuffs hier
 

@@ -81,4 +81,44 @@ void TimingBar::advance(int step)
 
 }
 
+QRectF TimingBar::boundingRect() const
+{
+    return QRectF(0, 0, 220, 50);
+}
+
+void TimingBar::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
+{
+    // Background track
+    painter->fillRect(10, 15, 200, 10, Qt::darkGray);
+    painter->setPen(Qt::white);
+    painter->drawRect(10, 15, 200, 10);
+
+    // Good zone (wider, yellow)
+    int goodLeft = 10 + static_cast<int>(200 * goodZoneStart);
+    int goodWidth = static_cast<int>(200 * (goodZoneEnd - goodZoneStart));
+    painter->fillRect(goodLeft, 12, goodWidth, 16, QColor(255, 255, 0, 80));
+
+    // Perfect zone (small, green)
+    int perfLeft = 10 + static_cast<int>(200 * perfectZoneStart);
+    int perfWidth = static_cast<int>(200 * (perfectZoneEnd - perfectZoneStart));
+    painter->fillRect(perfLeft, 10, perfWidth, 20, QColor(0, 255, 0, 120));
+
+    // Moving indicator
+    int indicatorX = 10 + static_cast<int>(200 * position);
+    painter->setPen(QPen(Qt::red, 3));
+    painter->drawLine(indicatorX, 8, indicatorX, 28);
+
+    // Result text
+    if (resultDisplayFrames > 0) {
+        QString text;
+        QColor col;
+        if (lastResult == TimingResult::Perfect) { text = "PERFECT!"; col = Qt::green; }
+        else if (lastResult == TimingResult::Good) { text = "GOOD"; col = Qt::yellow; }
+        else if (lastResult == TimingResult::Miss) { text = "MISS"; col = Qt::red; }
+
+        painter->setPen(col);
+        painter->setFont(QFont("Arial", 12, QFont::Bold));
+        painter->drawText(10, 45, 200, 20, Qt::AlignCenter, text);
+    }
+}
 

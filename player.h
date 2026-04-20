@@ -4,6 +4,7 @@
 #include "sprite.h"
 #include "objects.h"
 #include "staminabar.h"
+#include "timingbar.h"
 #include <QTimer>
 
 
@@ -22,6 +23,7 @@ public:
     };
 
     StaminaBar* staminaBar = nullptr;
+    TimingBar* timingBar = nullptr;
 
     float baseSpeed = 5.0f; //change value stuffs
 
@@ -61,11 +63,6 @@ private:
     void setState();
     void updateAnim();
     void collision();
-
-
-
-
-
 };
 
 #endif // PLAYER_H

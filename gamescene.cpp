@@ -46,6 +46,21 @@ GameScene::GameScene()
     localPlayer->staminaBar = localStaminaBar;
     localPlayer->staminaBar = remoteStaminaBar;
 
+    localTimingBar = new TimingBar();
+    addItem(localTimingBar);
+    localTimingBar->setPos(40, 60);        // below stamina bar on left side
+
+    remoteTimingBar = new TimingBar();
+    addItem(remoteTimingBar);
+    remoteTimingBar->setPos(1040, 60);     // below stamina on right side
+
+    localPlayer->timingBar = localTimingBar;
+    remotePlayer->timingBar = remoteTimingBar;
+
+    breathingTimer = new QTimer(this);
+    connect(breathingTimer, &QTimer::timeout, this, &GameScene::triggerBreathingMinigame);
+    breathingTimer->start(4000);   // every 4 seconds
+
     //************************************************************************************************
    // sand = new Sand(256*1000,256*1000);
     sand = new Sand(256*2,256*2);
@@ -151,9 +166,11 @@ void GameScene::keyPressEvent(QKeyEvent *e)
     default: break;
     }
 
-    //----------------KeyPressTiming vir Stamina Bar---------------
+    //----------------KeyPressTiming vir Stamina Bar and Timing Bar---------------
     if(e->key() == Qt::Key_Space)
     {
+        Player* activePlayer = nullptr;
+        TimingBar* activeBar = nullptr;
         //Chuck this in before the minigame to be added
         if(localPlayer && localPlayer->staminaBar)
         {
@@ -164,7 +181,34 @@ void GameScene::keyPressEvent(QKeyEvent *e)
         {
             remotePlayer->staminaBar->increase(15.0f);
         }
-    }
+
+        if (localPlayer && localPlayer->timingBar && localPlayer->timingBar->isActive())
+        {
+            activePlayer = localPlayer;
+            activeBar = localPlayer->timingBar;
+        }
+        else if (remotePlayer && remotePlayer->timingBar && remotePlayer->timingBar->isActive())
+        {
+            activePlayer = remotePlayer;
+            activeBar = remotePlayer->timingBar;
+        }
+
+        if (activeBar && activePlayer)
+        {
+            TimingResult result = activeBar->evaluateHit();
+            activeBar->showResult(result);
+
+            if (activePlayer->staminaBar)
+            {
+                if (result == TimingResult::Perfect)
+                    activePlayer->staminaBar->increase(28.0f);
+                else if (result == TimingResult::Good)
+                    activePlayer->staminaBar->increase(14.0f);
+                // Miss = small penalty or nothing
+            }
+
+            activeBar->deactivate();
+        }
 
     //--------------------------------------------------------------------------
 
@@ -188,7 +232,7 @@ void GameScene::keyPressEvent(QKeyEvent *e)
 
 
 }
-
+}
 //Release key for false
 void GameScene::keyReleaseEvent(QKeyEvent *e)
 {
@@ -227,4 +271,14 @@ void GameScene::keyReleaseEvent(QKeyEvent *e)
 //        localPlayer->movement.right = false;
 //    if (e->key() == Qt::Key_Space)
 //        localPlayer->movement.increaseSpeed = false;
+}
+
+
+void GameScene::triggerBreathingMinigame()
+{
+    if (localPlayer && localPlayer->timingBar && !localPlayer->timingBar->isActive()) {
+        float speedFactor = localPlayer->getCurrentSpeedFactor();
+        localPlayer->timingBar->activate(speedFactor);
+    }
+    // same for remotePlayer
 }

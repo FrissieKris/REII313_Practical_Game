@@ -15,6 +15,7 @@
 #include "grass.h"
 #include "track.h"
 #include "trackbarrier.h"
+#include "timingbar.h"
 
 
 class GameScene : public QGraphicsScene
@@ -39,6 +40,10 @@ private:
     QList<Powerups*> powerUpsMap;
     StaminaBar* localStaminaBar = nullptr;
     StaminaBar* remoteStaminaBar = nullptr;
+    TimingBar* localTimingBar = nullptr;
+    TimingBar* remoteTimingBar = nullptr;
+    private slots:
+    void triggerBreathingMinigame();
 
 };
 
