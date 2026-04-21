@@ -24,6 +24,7 @@ public:
     bool isThrowing = false;
 
 
+
     bool itemPickedUp;
     void throwShuriken(QPointF target);
     QTimer speedTimer;
