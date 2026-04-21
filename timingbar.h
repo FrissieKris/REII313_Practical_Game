@@ -12,18 +12,22 @@ class TimingBar : public QGraphicsItem
 public:
     explicit TimingBar(QGraphicsItem* parent = nullptr);
 
-    void activate(float playerSpeedFactor = 1.0f);
-    void deactivate();
-    bool isActive() const;
     TimingResult evaluateHit();
+    QRectF boundingRect() const override;
+    float getCurrentSpeedFactor();
+    bool isActive() const;
+
     void showResult(TimingResult result);
 
-    QRectF boundingRect() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
-
+    void activate(float playerSpeedFactor = 1.0f);
+    void deactivate();
     void advance(int step) override;
 
+
 private:
+
+    TimingResult lastResult = TimingResult::None;
     float position = 0.0f;      // 0.0 to 1.0 (normalized)
     float speed = 0.02f;        // pixels per frame normalized
     float direction = 1.0f;
@@ -33,9 +37,9 @@ private:
     float goodZoneStart    = 0.30f;
     float goodZoneEnd      = 0.70f;
 
-    bool active = false;
-    TimingResult lastResult = TimingResult::None;
     int resultDisplayFrames = 0;
+
+    bool active = false;
 
     class Player* linkedPlayer = nullptr;
 };

@@ -4,27 +4,30 @@
 #include <QGraphicsScene>
 #include <QtGlobal>
 #include <cmath>
+#include <cmath>
+#include <projectilemovement.h>
 
 Player::Player()
     : player(":/Sprites/Sprites/Character/Character.png", 128, 128, 0, 1),
-        velocity(0, 0)
-  {
-           staminaBar = new StaminaBar();
+      velocity(0, 0)
+{
+  //  staminaBar = new StaminaBar();
     setPixmap(player.getCurrentFrame());
     qDebug() << player.getCurrentFrame().isNull();
-      setPixmap(player.getCurrentFrame());
-      qDebug() << player.getCurrentFrame().isNull();
+    setPixmap(player.getCurrentFrame());
+    qDebug() << player.getCurrentFrame().isNull();
 
-      speedTimer.setSingleShot(true);
+    speedTimer.setSingleShot(true);
 
-      connect(&speedTimer, &QTimer::timeout, this, [this]() {
-          if (movement.increaseSpeed == true)
+    connect(&speedTimer, &QTimer::timeout, this, [this]()
+    {
+        if (movement.increaseSpeed == true)
             movement.increaseSpeed = false;
-          else if (movement.decreaseSpeed == true)
-              movement.decreaseSpeed = false;
-      });
+        else if (movement.decreaseSpeed == true)
+            movement.decreaseSpeed = false;
+    });
 
-  }
+}
 
 
 //Player updates
@@ -43,16 +46,19 @@ void Player::advance(int step)
 
     if(staminaBar)
     {
-        float speedFactor = std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y()) / baseSpeed;
-        if(speedFactor > 1.0f)
+        float currentSpeed = std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y());
+        float speedFactor = currentSpeed / baseSpeed;
+        if(currentSpeed > baseSpeed)
         {
             staminaBar->decrease(0.08f * speedFactor);
         }
-        if(velocity.isNull() && staminaBar->getValue() < 100.0f)
+        else if(currentSpeed < 0.5f && staminaBar->getValue() < 100.0f)
         {
-            staminaBar->increase(0.03f);
+            staminaBar->increase(0.02f);
         }
     }
+    if (timingBar)
+        timingBar->advance(step);
 
     //Sit die collision stamina penalty se stuffs hier
 
@@ -214,6 +220,7 @@ void Player::updateAnim()
 
     }
 
+
     setPixmap(player.getCurrentFrame());
 
     prevstate = state;
@@ -282,6 +289,28 @@ void Player::collision()
     oldPos = pos();
 
 }
+void Player::throwShuriken(QPointF target)
+{
+    if (!itemPickedUp) return;
+
+        itemPickedUp = false;
+        isThrowing = true;
+
+        QPointF dir = target - scenePos();
+
+        qreal length = std::sqrt(dir.x()*dir.x() + dir.y()*dir.y());
+
+        if (length == 0) return;
+
+        dir /= length;
+
+        QPointF velocity = dir * 12.0;
+
+
+        ProjectileMovement *proj = new ProjectileMovement(scenePos(), velocity);
+        scene()->addItem(proj);
+
+}
 
 QRectF Player::boundingRect() const
 {
@@ -293,4 +322,9 @@ QPainterPath Player::shape() const
     QPainterPath path;
     path.addRect(40, 0, 80, 180);
     return path;
+}
+
+float Player::getCurrentSpeedFactor() const
+{
+        return std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y()) / baseSpeed;
 }

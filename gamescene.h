@@ -15,6 +15,10 @@
 #include "grass.h"
 #include "track.h"
 #include "trackbarrier.h"
+#include "timingbar.h"
+#include <QGraphicsSceneMouseEvent>
+#include "ninjastar.h"
+#include "staminabar.h"
 
 
 class GameScene : public QGraphicsScene
@@ -29,16 +33,27 @@ public:
     Grass *grass;
     Track *track;
     TrackBarrier *barrier;
+    NinjaStar *ninjaStar;
+    StaminaBar *staminaBar;
 
 protected:
     void keyPressEvent(QKeyEvent *e);
     void keyReleaseEvent(QKeyEvent *e);
+    void mousePressEvent(QGraphicsSceneMouseEvent *e);
+
 
 private:
-    QTimer *timer;
+    QTimer* timer;
+    QTimer* breathingTimer = nullptr;
     QList<Powerups*> powerUpsMap;
     StaminaBar* localStaminaBar = nullptr;
     StaminaBar* remoteStaminaBar = nullptr;
+    TimingBar* localTimingBar = nullptr;
+    TimingBar* remoteTimingBar = nullptr;
+
+
+    private slots:
+    void triggerBreathingMinigame();
 
 };
 

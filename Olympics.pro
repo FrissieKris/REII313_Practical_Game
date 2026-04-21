@@ -14,9 +14,11 @@ SOURCES += \
     grass.cpp \
     main.cpp \
     mainwindow.cpp \
+    ninjastar.cpp \
     objects.cpp \
     player.cpp \
     powerups.cpp \
+    projectilemovement.cpp \
     sand.cpp \
     sprite.cpp \
     staminabar.cpp \
@@ -30,17 +32,19 @@ HEADERS += \
     gamescene.h \
     grass.h \
     mainwindow.h \
+    ninjastar.h \
     objects.h \
     player.h \
     powerups.h \
+    projectilemovement.h \
     sand.h \
     sprite.h \
     timingbar.h \
     tree.h \
-    staminabar.h
+    staminabar.h \
     track.h \
-    trackbarrier.h \
-    tree.h
+    trackbarrier.h
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

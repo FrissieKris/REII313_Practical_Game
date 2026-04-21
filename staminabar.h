@@ -21,6 +21,30 @@ private:
     float currentValue = 100.0f;
     float maxValue = 100.0f;
 
+// #include <QGraphicsPixmapItem>
+// #include <QPixmap>
+// #include <QLabel>
+
+// class Player;
+
+// class StaminaBar
+// {
+// public:
+//     StaminaBar(Player *player);
+
+//    QGraphicsPixmapItem *border;
+//    QGraphicsPixmapItem *fill;
+//     void updateBar();
+//     void getStaminaLevel(int stamina);
+
+// private:
+//     Player *player;
+//     QPixmap staminaFill;
+//     QPixmap borders;
+
+
+
+
 
 };
 
