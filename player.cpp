@@ -4,6 +4,8 @@
 #include <QGraphicsScene>
 #include <QtGlobal>
 #include <cmath>
+#include <cmath>
+#include <projectilemovement.h>
 
 Player::Player()
     : player(":/Sprites/Sprites/Character/Character.png", 128, 128, 0, 1),
@@ -218,6 +220,7 @@ void Player::updateAnim()
 
     }
 
+
     setPixmap(player.getCurrentFrame());
 
     prevstate = state;
@@ -284,6 +287,28 @@ void Player::collision()
     }
 
     oldPos = pos();
+
+}
+void Player::throwShuriken(QPointF target)
+{
+    if (!itemPickedUp) return;
+
+        itemPickedUp = false;
+        isThrowing = true;
+
+        QPointF dir = target - scenePos();
+
+        qreal length = std::sqrt(dir.x()*dir.x() + dir.y()*dir.y());
+
+        if (length == 0) return;
+
+        dir /= length;
+
+        QPointF velocity = dir * 12.0;
+
+
+        ProjectileMovement *proj = new ProjectileMovement(scenePos(), velocity);
+        scene()->addItem(proj);
 
 }
 

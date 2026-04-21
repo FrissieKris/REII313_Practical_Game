@@ -14,7 +14,7 @@ public:
     //void onCollision(Objects* other) override;
     QRectF boundingRect() const override;
     void applyEffect(class Player *player) override;
-    void advance(int step) override {}
+    //void advance(int step) override {}
 
 private:
     Sprite powerUp;

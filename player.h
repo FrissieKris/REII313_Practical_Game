@@ -1,12 +1,13 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+//#include <ninjastar.h>
 #include "sprite.h"
 #include "objects.h"
 #include "staminabar.h"
 #include "timingbar.h"
 #include <QTimer>
-
+#include "staminabar.h"
 
 
 class Player : public Objects
@@ -27,6 +28,14 @@ public:
 
     float baseSpeed = 5.0f; //change value stuffs
     float getCurrentSpeedFactor() const;
+    bool isThrowing = false;
+
+    int currentStamina = 15;
+
+
+    bool itemPickedUp;
+    void throwShuriken(QPointF target);
+    int maxStamina = 15;
 
     QTimer speedTimer;
     MoveMent movement;
@@ -47,13 +56,15 @@ private:
         MovingLeft,
         MovingRight,
         MovingUp,
-        MovingDown,
+        MovingDown
+
        // DiagTopRight,
        // DiagTopLeft,
         //DiagBottomRight,
        // DiagBottomLeft
 
     };
+
 
     Sprite player;
     QPointF velocity;
@@ -64,6 +75,11 @@ private:
     void setState();
     void updateAnim();
     void collision();
+    StaminaBar *staminaBar;
+
+
+
+
 };
 
 #endif // PLAYER_H
