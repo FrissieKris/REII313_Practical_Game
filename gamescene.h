@@ -15,8 +15,8 @@
 #include "track.h"
 #include "trackbarrier.h"
 #include <QGraphicsSceneMouseEvent>
-#include <ninjastar.h>
-
+#include "ninjastar.h"
+#include "staminabar.h"
 
 
 class GameScene : public QGraphicsScene
@@ -32,6 +32,7 @@ public:
     Track *track;
     TrackBarrier *barrier;
     NinjaStar *ninjaStar;
+    StaminaBar *staminaBar;
 
 protected:
     void keyPressEvent(QKeyEvent *e);

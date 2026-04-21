@@ -21,6 +21,7 @@ SOURCES += \
     projectilemovement.cpp \
     sand.cpp \
     sprite.cpp \
+    staminabar.cpp \
     track.cpp \
     trackbarrier.cpp \
     tree.cpp
@@ -37,6 +38,7 @@ HEADERS += \
     projectilemovement.h \
     sand.h \
     sprite.h \
+    staminabar.h \
     track.h \
     trackbarrier.h \
     tree.h
