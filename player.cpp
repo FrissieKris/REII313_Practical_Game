@@ -9,7 +9,7 @@ Player::Player()
     : player(":/Sprites/Sprites/Character/Character.png", 128, 128, 0, 1),
       velocity(0, 0)
 {
-    staminaBar = new StaminaBar();
+  //  staminaBar = new StaminaBar();
     setPixmap(player.getCurrentFrame());
     qDebug() << player.getCurrentFrame().isNull();
     setPixmap(player.getCurrentFrame());
@@ -17,7 +17,8 @@ Player::Player()
 
     speedTimer.setSingleShot(true);
 
-    connect(&speedTimer, &QTimer::timeout, this, [this]() {
+    connect(&speedTimer, &QTimer::timeout, this, [this]()
+    {
         if (movement.increaseSpeed == true)
             movement.increaseSpeed = false;
         else if (movement.decreaseSpeed == true)
@@ -43,14 +44,15 @@ void Player::advance(int step)
 
     if(staminaBar)
     {
-        float speedFactor = std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y()) / baseSpeed;
-        if(speedFactor > 1.0f)
+        float currentSpeed = std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y());
+        float speedFactor = currentSpeed / baseSpeed;
+        if(currentSpeed > baseSpeed)
         {
             staminaBar->decrease(0.08f * speedFactor);
         }
-        if(velocity.isNull() && staminaBar->getValue() < 100.0f)
+        else if(currentSpeed < 0.5f && staminaBar->getValue() < 100.0f)
         {
-            staminaBar->increase(0.03f);
+            staminaBar->increase(0.02f);
         }
     }
     if (timingBar)
@@ -295,4 +297,9 @@ QPainterPath Player::shape() const
     QPainterPath path;
     path.addRect(40, 0, 80, 180);
     return path;
+}
+
+float Player::getCurrentSpeedFactor() const
+{
+        return std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y()) / baseSpeed;
 }

@@ -26,6 +26,7 @@ public:
     TimingBar* timingBar = nullptr;
 
     float baseSpeed = 5.0f; //change value stuffs
+    float getCurrentSpeedFactor() const;
 
     QTimer speedTimer;
     MoveMent movement;

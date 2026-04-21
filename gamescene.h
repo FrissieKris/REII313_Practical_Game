@@ -36,12 +36,15 @@ protected:
     void keyReleaseEvent(QKeyEvent *e);
 
 private:
-    QTimer *timer;
+    QTimer* timer;
+    QTimer* breathingTimer = nullptr;
     QList<Powerups*> powerUpsMap;
     StaminaBar* localStaminaBar = nullptr;
     StaminaBar* remoteStaminaBar = nullptr;
     TimingBar* localTimingBar = nullptr;
     TimingBar* remoteTimingBar = nullptr;
+
+
     private slots:
     void triggerBreathingMinigame();
 
