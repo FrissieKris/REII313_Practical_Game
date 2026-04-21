@@ -1,5 +1,6 @@
 #include "gamescene.h"
 #include "staminabar.h"
+#include "timingbar.h"
 #include <QDebug>
 #include <QRandomGenerator>
 #include <QtGlobal>
@@ -43,9 +44,6 @@ GameScene::GameScene()
     addItem(remoteStaminaBar);
     remoteStaminaBar->setPos(1050,30);
 
-    localPlayer->staminaBar = localStaminaBar;
-    localPlayer->staminaBar = remoteStaminaBar;
-
     localTimingBar = new TimingBar();
     addItem(localTimingBar);
     localTimingBar->setPos(40, 60);        // below stamina bar on left side
@@ -53,6 +51,9 @@ GameScene::GameScene()
     remoteTimingBar = new TimingBar();
     addItem(remoteTimingBar);
     remoteTimingBar->setPos(1040, 60);     // below stamina on right side
+
+    localPlayer->staminaBar = localStaminaBar;
+    remotePlayer->staminaBar = remoteStaminaBar;
 
     localPlayer->timingBar = localTimingBar;
     remotePlayer->timingBar = remoteTimingBar;
@@ -109,7 +110,7 @@ GameScene::GameScene()
     {
         QGraphicsScene::advance();
 
-        for (auto view : views())
+        for (auto* view : views())
         {
             //view->centerOn(localPlayer);
 //            QPointF c1 = localPlayer->pos();
@@ -169,45 +170,49 @@ void GameScene::keyPressEvent(QKeyEvent *e)
     //----------------KeyPressTiming vir Stamina Bar and Timing Bar---------------
     if(e->key() == Qt::Key_Space)
     {
-        Player* activePlayer = nullptr;
-        TimingBar* activeBar = nullptr;
+
         //Chuck this in before the minigame to be added
-        if(localPlayer && localPlayer->staminaBar)
+        if(localPlayer && localPlayer->timingBar && localPlayer->timingBar->isActive())
         {
-            localPlayer->staminaBar->increase(15.0f);
+            TimingResult res = localPlayer->timingBar->evaluateHit();
+            localPlayer->timingBar->showResult(res);
 
-        }
-        if(remotePlayer && remotePlayer->staminaBar)
-        {
-            remotePlayer->staminaBar->increase(15.0f);
-        }
 
-        if (localPlayer && localPlayer->timingBar && localPlayer->timingBar->isActive())
-        {
-            activePlayer = localPlayer;
-            activeBar = localPlayer->timingBar;
-        }
-        else if (remotePlayer && remotePlayer->timingBar && remotePlayer->timingBar->isActive())
-        {
-            activePlayer = remotePlayer;
-            activeBar = remotePlayer->timingBar;
-        }
-
-        if (activeBar && activePlayer)
-        {
-            TimingResult result = activeBar->evaluateHit();
-            activeBar->showResult(result);
-
-            if (activePlayer->staminaBar)
+            if(localPlayer->staminaBar)
             {
-                if (result == TimingResult::Perfect)
-                    activePlayer->staminaBar->increase(28.0f);
-                else if (result == TimingResult::Good)
-                    activePlayer->staminaBar->increase(14.0f);
-                // Miss = small penalty or nothing
+                if(res == TimingResult::Perfect)
+                    localPlayer->staminaBar->increase(28.0f);
+                else if(res == TimingResult::Good) localPlayer->staminaBar->increase(14.0f);
+                //Miss means no gain
             }
+            localPlayer->timingBar->deactivate();
+        }
+//        if (localPlayer && localPlayer->timingBar && localPlayer->timingBar->isActive())
+//        {
+//            activePlayer = localPlayer;
+//            activeBar = localPlayer->timingBar;
+//        }
+//        else if (remotePlayer && remotePlayer->timingBar && remotePlayer->timingBar->isActive())
+//        {
+//            activePlayer = remotePlayer;
+//            activeBar = remotePlayer->timingBar;
+//        }
 
-            activeBar->deactivate();
+//        if (activeBar && activePlayer)
+//        {
+//            TimingResult result = activeBar->evaluateHit();
+//            activeBar->showResult(result);
+
+//            if (activePlayer->staminaBar)
+//            {
+//                if (result == TimingResult::Perfect)
+//                    activePlayer->staminaBar->increase(28.0f);
+//                else if (result == TimingResult::Good)
+//                    activePlayer->staminaBar->increase(14.0f);
+//                // Miss = small penalty or nothing
+//            }
+
+//            activeBar->deactivate();
         }
 
     //--------------------------------------------------------------------------
@@ -231,7 +236,7 @@ void GameScene::keyPressEvent(QKeyEvent *e)
 //        localPlayer->movement.increaseSpeed = true;
 
 
-}
+
 }
 //Release key for false
 void GameScene::keyReleaseEvent(QKeyEvent *e)
@@ -276,7 +281,8 @@ void GameScene::keyReleaseEvent(QKeyEvent *e)
 
 void GameScene::triggerBreathingMinigame()
 {
-    if (localPlayer && localPlayer->timingBar && !localPlayer->timingBar->isActive()) {
+    if (localPlayer && localPlayer->timingBar && !localPlayer->timingBar->isActive())
+    {
         float speedFactor = localPlayer->getCurrentSpeedFactor();
         localPlayer->timingBar->activate(speedFactor);
     }
