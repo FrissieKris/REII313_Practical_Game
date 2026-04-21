@@ -10,10 +10,12 @@
 #include "tree.h"
 #include "powerups.h"
 #include <QList>
+#include "staminabar.h"
 #include "sand.h"
 #include "grass.h"
 #include "track.h"
 #include "trackbarrier.h"
+#include "timingbar.h"
 #include <QGraphicsSceneMouseEvent>
 #include "ninjastar.h"
 #include "staminabar.h"
@@ -41,9 +43,17 @@ protected:
 
 
 private:
-    QTimer *timer;
+    QTimer* timer;
+    QTimer* breathingTimer = nullptr;
     QList<Powerups*> powerUpsMap;
+    StaminaBar* localStaminaBar = nullptr;
+    StaminaBar* remoteStaminaBar = nullptr;
+    TimingBar* localTimingBar = nullptr;
+    TimingBar* remoteTimingBar = nullptr;
 
+
+    private slots:
+    void triggerBreathingMinigame();
 
 };
 

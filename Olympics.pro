@@ -22,6 +22,7 @@ SOURCES += \
     sand.cpp \
     sprite.cpp \
     staminabar.cpp \
+    timingbar.cpp \
     track.cpp \
     trackbarrier.cpp \
     tree.cpp
@@ -38,10 +39,12 @@ HEADERS += \
     projectilemovement.h \
     sand.h \
     sprite.h \
+    timingbar.h \
+    tree.h \
     staminabar.h \
     track.h \
-    trackbarrier.h \
-    tree.h
+    trackbarrier.h
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

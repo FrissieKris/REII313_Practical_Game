@@ -4,6 +4,8 @@
 //#include <ninjastar.h>
 #include "sprite.h"
 #include "objects.h"
+#include "staminabar.h"
+#include "timingbar.h"
 #include <QTimer>
 #include "staminabar.h"
 
@@ -21,6 +23,11 @@ public:
         bool decreaseSpeed = false;
     };
 
+    StaminaBar* staminaBar = nullptr;
+    TimingBar* timingBar = nullptr;
+
+    float baseSpeed = 5.0f; //change value stuffs
+    float getCurrentSpeedFactor() const;
     bool isThrowing = false;
 
     int currentStamina = 15;
