@@ -5,7 +5,7 @@
 #include "sprite.h"
 #include "objects.h"
 #include <QTimer>
-
+#include "staminabar.h"
 
 
 class Player : public Objects
@@ -23,10 +23,13 @@ public:
 
     bool isThrowing = false;
 
+    int currentStamina = 15;
 
 
     bool itemPickedUp;
     void throwShuriken(QPointF target);
+    int maxStamina = 15;
+
     QTimer speedTimer;
     MoveMent movement;
 
@@ -65,6 +68,8 @@ private:
     void setState();
     void updateAnim();
     void collision();
+    StaminaBar *staminaBar;
+
 
 
 

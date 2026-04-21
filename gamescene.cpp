@@ -25,11 +25,8 @@ GameScene::GameScene()
 
     staminaBar = new StaminaBar(localPlayer);
 
-    addItem(staminaBar->border);
-    addItem(staminaBar->fill);
-    staminaBar->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    staminaBar->border->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    staminaBar->fill->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+
+
 
     remotePlayer = new Player();
 
@@ -54,6 +51,10 @@ GameScene::GameScene()
     addItem(barrier);
     addItem(tree);
     addItem(ninjaStar);
+
+
+    staminaBar->border->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    staminaBar->fill->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 
     //Spawn the powerups, need to be done better
     for (int i = 0; i < 10; ++i)
@@ -83,6 +84,8 @@ GameScene::GameScene()
     //qDebug() << "localPlayer:" << localPlayer;
 
     addItem(localPlayer);
+    addItem(staminaBar->border);
+    addItem(staminaBar->fill);
 
 
     //Small window that follows with the player as he/she moves
@@ -102,6 +105,7 @@ GameScene::GameScene()
             view->setSceneRect(r1);
             staminaBar->border->setPos(c1.x() - 100, c1.y() - 150);
             staminaBar->fill->setPos(c1.x() - 100, c1.y() - 150);
+            staminaBar->getStaminaLevel(localPlayer->currentStamina);
 
        }
     });
@@ -128,7 +132,10 @@ void GameScene::keyPressEvent(QKeyEvent *e)
         localPlayer->movement.down = true;
 
     else if (e->key() == Qt::Key_Space)
+    {
         localPlayer->movement.increaseSpeed = true;
+        localPlayer->currentStamina = localPlayer->currentStamina -2 ;
+    }
 
 
 }

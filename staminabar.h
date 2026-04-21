@@ -6,14 +6,15 @@
 
 class Player;
 
-class StaminaBar: public QGraphicsPixmapItem
+class StaminaBar
 {
 public:
     StaminaBar(Player *player);
+
    QGraphicsPixmapItem *border;
- QGraphicsPixmapItem *fill;
+   QGraphicsPixmapItem *fill;
     void updateBar();
-    QPixmap getStaminaLevel(int stamina);
+    void getStaminaLevel(int stamina);
 
 private:
     Player *player;
