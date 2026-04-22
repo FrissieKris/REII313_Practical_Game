@@ -26,9 +26,7 @@ Player::Player()
               currentStamina = maxStamina;
 
       });
-      coolDownTimer.start(500);
-
-
+      coolDownTimer.start(1000);
 
   }
 

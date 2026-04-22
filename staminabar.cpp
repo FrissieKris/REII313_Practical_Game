@@ -21,14 +21,18 @@ void StaminaBar::getStaminaLevel(int stamina)
 {
     //qDebug() << "fill:" << fill;
     qDebug() << "border:" << border;
-    //15 blocks
+
     switch(stamina)
     {
+    case 0:
+        return fill->setPixmap(staminaFill.copy(0, 0, 30, 48));
+        break;
+
     case 1:
-        return fill->setPixmap(staminaFill.copy(0, 0, 26, 48));
+        return fill->setPixmap(staminaFill.copy(0, 0, 46, 48));
         break;
     case 2:
-        return fill->setPixmap(staminaFill.copy(0, 0, 52, 48));
+        return fill->setPixmap(staminaFill.copy(0, 0, 62, 48));
         break;
     case 3:
         return fill->setPixmap(staminaFill.copy(0, 0, 78, 48));

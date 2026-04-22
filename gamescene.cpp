@@ -131,10 +131,15 @@ void GameScene::keyPressEvent(QKeyEvent *e)
     else if (e->key() == Qt::Key_Down)
         localPlayer->movement.down = true;
 
-    else if (e->key() == Qt::Key_Space && localPlayer->currentStamina != localPlayer->minStamina)
+    else if (e->key() == Qt::Key_Space && localPlayer->currentStamina != localPlayer->minStamina && !e->isAutoRepeat())
     {
         localPlayer->movement.increaseSpeed = true;
         localPlayer->currentStamina = localPlayer->currentStamina -1 ;
+    }
+    else if (e->key() == Qt::Key_Space && localPlayer->currentStamina != localPlayer->minStamina && e->isAutoRepeat())
+    {
+        localPlayer->movement.increaseSpeed = true;
+        localPlayer->currentStamina = 0 ;
     }
 
 
