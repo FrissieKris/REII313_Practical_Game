@@ -66,11 +66,19 @@ void Player::advance(int step)
 //        }
 
 
-        frameTick++;
+        ++frameTick;
         if (frameTick % 6 == 0)
         {
             player.updateFrame();
             setPixmap(player.getCurrentFrame());
+            if (currentStamina < 6)
+            {
+                currentStamina += 1;
+            }
+            if (currentStamina == 0)
+                movement.increaseSpeed = false;
+            frameTick = 0;
+
         }
 }
 

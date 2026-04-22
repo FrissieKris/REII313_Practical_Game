@@ -23,12 +23,13 @@ public:
 
     bool isThrowing = false;
 
-    int currentStamina = 15;
+    int currentStamina = 6;
 
 
     bool itemPickedUp;
     void throwShuriken(QPointF target);
-    int maxStamina = 15;
+    int maxStamina = 6;
+    int minStamina = 0;
 
     QTimer speedTimer;
     MoveMent movement;

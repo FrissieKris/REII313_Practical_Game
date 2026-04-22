@@ -5,55 +5,69 @@ StaminaBar::StaminaBar(Player *p)
     :player(p)
 {
 
-    border = new QGraphicsPixmapItem(QPixmap(":/Sprites/Sprites/StaminaBar/Staminabar_border.png"));
-    fill = new QGraphicsPixmapItem(QPixmap(":/Sprites/Sprites/StaminaBar/Staminabar_fill-Sheet.png"));
-    //fill = QPixmap(":/Sprites/Sprites/StaminaBar/Staminabar_fill-Sheet.png");
 
-    staminaFill = QPixmap(":/Sprites/Sprites/StaminaBar/Staminabar_fill-Sheet.png");
+    staminaBar = QPixmap(":/Sprites/Sprites/StaminaBar/Staminabar.png");
+    staminaFill = staminaBar.copy(0,48, 136, 48);
+    borders = staminaBar.copy(0,0, 136, 48);
 
+    border = new QGraphicsPixmapItem(borders);
+    fill = new QGraphicsPixmapItem(staminaFill);
 
-   // setPixmap(border);
-//    stam = new QLabel();
-//    fil = new QLabel();
-//    stam->setPixmap(border);
-//    stam->show();
-
- //   setPixmap(staminaFill);
-
-    getStaminaLevel(15);
+    getStaminaLevel(6);
 }
 
 
 void StaminaBar::getStaminaLevel(int stamina)
 {
-    qDebug() << "fill:" << fill;
+    //qDebug() << "fill:" << fill;
     qDebug() << "border:" << border;
     //15 blocks
-    if (stamina >= 10)
+    switch(stamina)
     {
-
-        qDebug() << stamina << "Stamina above";
-
-        //return staminaFill.copy(0,0,64,960);
-
-
+    case 1:
+        return fill->setPixmap(staminaFill.copy(0, 0, 26, 48));
+        break;
+    case 2:
+        return fill->setPixmap(staminaFill.copy(0, 0, 52, 48));
+        break;
+    case 3:
+        return fill->setPixmap(staminaFill.copy(0, 0, 78, 48));
+        break;
+    case 4:
+        return fill->setPixmap(staminaFill.copy(0, 0, 94, 48));
+        break;
+    case 5:
+        return fill->setPixmap(staminaFill.copy(0, 0, 110, 48));
+        break;
+    case 6:
+        return fill->setPixmap(staminaFill.copy(0, 0, 136, 48));
+        break;
     }
-    else if (stamina >= 5 && stamina < 10)
-    {
 
-          qDebug() << stamina << "Stamina between";
-    }
+//    if (stamina >= 10)
+//    {
 
-    else if (stamina < 5)
-    {
+//        qDebug() << stamina << "Stamina above";
 
-          qDebug() << stamina << "Stamina below";
-    }
+
+
+//    }
+//    else if (stamina >= 5 && stamina < 10)
+//    {
+
+//          qDebug() << stamina << "Stamina between";
+//    }
+
+//    else if (stamina < 5)
+//    {
+
+//          qDebug() << stamina << "Stamina below";
+//    }
 
 
 //   int x = currentFrame * frameWidth;
 //   int y = frameHeight * frameOffset;
 //   return sheet.copy(x, y, frameWidth, frameHeight);
-    return fill->setPixmap(staminaFill.copy(0, 0, 64, 960));
+   // return fill->setPixmap(staminaFill.copy(0, 0, 136, 48));
 
 }

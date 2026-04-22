@@ -20,6 +20,7 @@ private:
     Player *player;
     QPixmap staminaFill;
     QPixmap borders;
+    QPixmap staminaBar;
 
 
 

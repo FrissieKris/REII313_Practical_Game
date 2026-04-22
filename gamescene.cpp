@@ -54,7 +54,7 @@ GameScene::GameScene()
 
 
     staminaBar->border->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    staminaBar->fill->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    //staminaBar->fill->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 
     //Spawn the powerups, need to be done better
     for (int i = 0; i < 10; ++i)
@@ -103,8 +103,8 @@ GameScene::GameScene()
 
 
             view->setSceneRect(r1);
-            staminaBar->border->setPos(c1.x() - 100, c1.y() - 150);
-            staminaBar->fill->setPos(c1.x() - 100, c1.y() - 150);
+            staminaBar->border->setPos(c1.x(), c1.y() - 55);
+            staminaBar->fill->setPos(c1.x() , c1.y() - 55);
             staminaBar->getStaminaLevel(localPlayer->currentStamina);
 
        }
@@ -131,10 +131,10 @@ void GameScene::keyPressEvent(QKeyEvent *e)
     else if (e->key() == Qt::Key_Down)
         localPlayer->movement.down = true;
 
-    else if (e->key() == Qt::Key_Space)
+    else if (e->key() == Qt::Key_Space && localPlayer->currentStamina != localPlayer->minStamina)
     {
         localPlayer->movement.increaseSpeed = true;
-        localPlayer->currentStamina = localPlayer->currentStamina -2 ;
+        localPlayer->currentStamina = localPlayer->currentStamina -1 ;
     }
 
 
