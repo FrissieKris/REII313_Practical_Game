@@ -24,7 +24,7 @@ SOURCES += \
     staminabar.cpp \
     track.cpp \
     trackbarrier.cpp \
-    tree.cpp
+    tree.cpp \
 
 HEADERS += \
     enemy.h \
@@ -38,15 +38,11 @@ HEADERS += \
     projectilemovement.h \
     sand.h \
     sprite.h \
+    tree.h \
     staminabar.h \
     track.h \
     trackbarrier.h \
-    tree.h
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+    tree.h \
 
 RESOURCES += \
     Resources.qrc
