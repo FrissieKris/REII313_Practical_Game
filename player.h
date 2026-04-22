@@ -32,6 +32,7 @@ public:
     int minStamina = 0;
 
     QTimer speedTimer;
+    QTimer coolDownTimer;
     MoveMent movement;
 
     QRectF boundingRect() const override;

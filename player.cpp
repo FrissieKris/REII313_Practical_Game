@@ -14,11 +14,21 @@ Player::Player()
       speedTimer.setSingleShot(true);
 
       connect(&speedTimer, &QTimer::timeout, this, [this]() {
-          if (movement.increaseSpeed == true)
+          if (movement.increaseSpeed == true )
             movement.increaseSpeed = false;
-          else if (movement.decreaseSpeed == true)
+          if (movement.decreaseSpeed == true)
               movement.decreaseSpeed = false;
+
       });
+      connect(&coolDownTimer, &QTimer::timeout, this, [this]() {
+          currentStamina += 1;
+          if (currentStamina > maxStamina)
+              currentStamina = maxStamina;
+
+      });
+      coolDownTimer.start(500);
+
+
 
   }
 
@@ -35,51 +45,14 @@ void Player::advance(int step)
 
     collision();
 
-//    QPointF nextPosX(pos().x(),pos().x()+ velocity.x());
+    ++frameTick;
+    if (frameTick % 6 == 0)
+    {
+        player.updateFrame();
+        setPixmap(player.getCurrentFrame());
+        frameTick = 0;
 
-
-//    QList<QGraphicsItem*> hits = collidingItems();
-
-//    bool blocked = false;
-
-//    //Check collision with player
-//    for (QGraphicsItem* item : hits)
-//    {
-//        qDebug() << "Colliding with:" << item;
-//        Objects* obj = dynamic_cast<Objects*>(item);
-
-//        if (!obj)
-//            continue;
-
-//        if (obj->isSolid())
-//        {
-//            blocked = true;
-
-//        }
-
-//        obj->onCollision(this);
-//     }
-
-//        if (!blocked)
-//        {
-//            setPos(nextPos);
-//        }
-
-
-        ++frameTick;
-        if (frameTick % 6 == 0)
-        {
-            player.updateFrame();
-            setPixmap(player.getCurrentFrame());
-            if (currentStamina < 6)
-            {
-                currentStamina += 1;
-            }
-            if (currentStamina == 0)
-                movement.increaseSpeed = false;
-            frameTick = 0;
-
-        }
+    }
 }
 
 //Movement direction checker, uses true and false to check as keyboard input only read one input at a time
