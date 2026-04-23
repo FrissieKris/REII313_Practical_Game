@@ -27,6 +27,7 @@ void ProjectileMovement::advance(int step)
         }
 
 
+
     }
     ninjastar.updateFrame();
     setPixmap(ninjastar.getCurrentFrame());

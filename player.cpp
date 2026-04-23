@@ -222,6 +222,7 @@ void Player::throwShuriken(QPointF target)
     if (!itemPickedUp) return;
 
         itemPickedUp = false;
+
         isThrowing = true;
 
         QPointF dir = target - scenePos();
