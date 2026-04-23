@@ -135,11 +135,13 @@ void GameScene::keyPressEvent(QKeyEvent *e)
     {
         localPlayer->movement.increaseSpeed = true;
         localPlayer->currentStamina = localPlayer->currentStamina -1 ;
+        localPlayer->coolDownTimer.stop();
     }
     else if (e->key() == Qt::Key_Space && localPlayer->currentStamina != localPlayer->minStamina && e->isAutoRepeat())
     {
         localPlayer->movement.increaseSpeed = true;
-        localPlayer->currentStamina = 0 ;
+        localPlayer->currentStamina = localPlayer->currentStamina -1 ;
+        localPlayer->coolDownTimer.stop();
     }
 
 
@@ -159,8 +161,13 @@ void GameScene::keyReleaseEvent(QKeyEvent *e)
 
     if (e->key() == Qt::Key_Right)
         localPlayer->movement.right = false;
+
     if (e->key() == Qt::Key_Space)
+    {
         localPlayer->movement.increaseSpeed = false;
+        localPlayer->coolDownTimer.start(1000);
+    }
+
 }
 void GameScene::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
