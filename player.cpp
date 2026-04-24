@@ -221,23 +221,23 @@ void Player::throwShuriken(QPointF target)
 {
     if (!itemPickedUp) return;
 
-        itemPickedUp = false;
+    itemPickedUp = false;
+    isThrowing = true;
 
-        isThrowing = true;
+    QPointF dir = target - scenePos();
 
-        QPointF dir = target - scenePos();
+    qreal length = std::sqrt(dir.x()*dir.x() + dir.y()*dir.y());
 
-        qreal length = std::sqrt(dir.x()*dir.x() + dir.y()*dir.y());
+    if (length == 0) return;
 
-        if (length == 0) return;
+    dir /= length;
 
-        dir /= length;
+    QPointF velocity = dir * 12.0;
 
-        QPointF velocity = dir * 12.0;
-
-
-        ProjectileMovement *proj = new ProjectileMovement(scenePos(), velocity);
-        scene()->addItem(proj);
+    ProjectileMovement *proj = new ProjectileMovement(scenePos(), velocity);
+    //proj->
+    proj->owner = this;
+    scene()->addItem(proj);
 
 }
 
