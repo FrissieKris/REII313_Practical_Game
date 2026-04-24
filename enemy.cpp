@@ -39,7 +39,7 @@ void Enemy::advance(int step)
             QPointF dir = player->pos() - scenePos();
             qreal length = std::sqrt(dir.x()*dir.x() + dir.y()*dir.y());
 
-            if (length == 0) return;
+            if (length <= 10 && length >= -10) return;
 
             dir /= length;
 
