@@ -14,6 +14,7 @@ void ProjectileMovement::advance(int step)
 
     if (!step || projectileState != ProjectileState::Flying) return;
     setPos(pos() + velocity);
+
     for (auto item : collidingItems())
     {
         Objects* obj = dynamic_cast<Objects*>(item);
@@ -34,14 +35,14 @@ void ProjectileMovement::advance(int step)
         }
 
         Player* player = dynamic_cast<Player*>(obj);
-           if (player && obj != owner)
-           {
-               player->setPos(player->pos() + velocity*5);
-               projectileState = ProjectileState::Hit;
-               scene()->removeItem(this);
-               deleteLater();
-               return;
-           }
+        if (player && obj != owner)
+        {
+           player->setPos(player->pos() + velocity*5);
+           projectileState = ProjectileState::Hit;
+           scene()->removeItem(this);
+           deleteLater();
+           return;
+        }
 
 
     }

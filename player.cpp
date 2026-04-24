@@ -243,12 +243,12 @@ void Player::throwShuriken(QPointF target)
 
 QRectF Player::boundingRect() const
 {
-     return QRectF(0, 0, 160, 230);
+     return QRectF(0, 0, 128, 128);
 }
 
 QPainterPath Player::shape() const
 {
     QPainterPath path;
-    path.addRect(40, 0, 80, 180);
+    path.addRect(0,0, 64, 128);
     return path;
 }

@@ -26,9 +26,12 @@ GameScene::GameScene()
     staminaBar = new StaminaBar(localPlayer);
 
 
+    enemy = new Enemy();
+
 
 
     remotePlayer = new Player();
+    remotePlayer->setPos(800,0);
 
     sand = new Sand(256*2,256*2);
     sand->setPos(100, -30);
@@ -43,7 +46,7 @@ GameScene::GameScene()
     ninjaStar = new NinjaStar();
     ninjaStar->setPos(400,100);
 
-    addItem(remotePlayer);
+    //addItem(remotePlayer);
     addItem(track);
 
     addItem(sand);
@@ -51,6 +54,7 @@ GameScene::GameScene()
     addItem(barrier);
     addItem(tree);
     addItem(ninjaStar);
+    addItem(enemy);
 
 
     staminaBar->border->setFlag(QGraphicsItem::ItemIgnoresTransformations);
