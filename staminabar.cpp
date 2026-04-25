@@ -62,11 +62,11 @@
 //     return currentValue;
 // }
 //=======
-// #include <QPainter>
-// #include <QDebug>
-// StaminaBar::StaminaBar(Player *p)
-//     :player(p)
-// {
+ #include <QPainter>
+ #include <QDebug>
+ StaminaBar::StaminaBar(Player *p)
+     :player(p)
+ {
 
 
     staminaBar = QPixmap(":/Sprites/Sprites/StaminaBar/Staminabar.png");
@@ -111,30 +111,30 @@ void StaminaBar::getStaminaLevel(int stamina)
         break;
     }
 
-//    if (stamina >= 10)
-//    {
+    if (stamina >= 10)
+    {
 
-//        qDebug() << stamina << "Stamina above";
-
-
-
-//    }
-//    else if (stamina >= 5 && stamina < 10)
-//    {
-
-////           qDebug() << stamina << "Stamina between";
-////     }
-
-////     else if (stamina < 5)
-////     {
-
-////           qDebug() << stamina << "Stamina below";
-////     }
+        qDebug() << stamina << "Stamina above";
 
 
-// //   int x = currentFrame * frameWidth;
-// //   int y = frameHeight * frameOffset;
-// //   return sheet.copy(x, y, frameWidth, frameHeight);
-//    // return fill->setPixmap(staminaFill.copy(0, 0, 136, 48));
 
-// }
+    }
+    else if (stamina >= 5 && stamina < 10)
+    {
+
+           qDebug() << stamina << "Stamina between";
+     }
+
+     else if (stamina < 5)
+     {
+
+           qDebug() << stamina << "Stamina below";
+     }
+
+
+//    int x = currentFrame * frameWidth;
+//    int y = frameHeight * frameOffset;
+//    return sheet.copy(x, y, frameWidth, frameHeight);
+//     return fill->setPixmap(staminaFill.copy(0, 0, 136, 48));
+
+ }
