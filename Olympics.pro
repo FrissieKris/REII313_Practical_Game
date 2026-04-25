@@ -12,7 +12,9 @@ SOURCES += \
     enemy.cpp \
     gamescene.cpp \
     grass.cpp \
+    levelmanager.cpp \
     main.cpp \
+    mainmenu.cpp \
     mainwindow.cpp \
     ninjastar.cpp \
     objects.cpp \
@@ -31,6 +33,8 @@ HEADERS += \
     enemy.h \
     gamescene.h \
     grass.h \
+    levelmanager.h \
+    mainmenu.h \
     mainwindow.h \
     ninjastar.h \
     objects.h \
