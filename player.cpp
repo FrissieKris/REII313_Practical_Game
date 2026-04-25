@@ -1,6 +1,8 @@
 #include "player.h"
 #include <QDebug>
 #include <QGraphicsScene>
+#include <QtGlobal>
+#include <cmath>
 #include <cmath>
 #include <projectilemovement.h>
 
@@ -11,7 +13,7 @@ Player::Player()
       setPixmap(player.getCurrentFrame());
       qDebug() << player.getCurrentFrame().isNull();
 
-      speedTimer.setSingleShot(true);
+    speedTimer.setSingleShot(true);
 
       connect(&speedTimer, &QTimer::timeout, this, [this]() {
           if (movement.increaseSpeed == true )
@@ -28,7 +30,7 @@ Player::Player()
       });
       coolDownTimer.start(1000);
 
-  }
+}
 
 
 //Player updates
@@ -44,6 +46,77 @@ void Player::advance(int step)
     collision();
 
     ++frameTick;
+    //---------------Stamina Bar Implementation------------------------
+
+    // if(staminaBar)
+    // {
+    //     float currentSpeed = std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y());
+    //     float speedFactor = currentSpeed / baseSpeed;
+    //     if(currentSpeed > baseSpeed)
+    //     {
+    //         staminaBar->decrease(0.08f * speedFactor);
+    //     }
+    //     else if(currentSpeed < 0.5f && staminaBar->getValue() < 100.0f)
+    //     {
+    //         staminaBar->increase(0.02f);
+    //     }
+    // }
+    // if (timingBar)
+    //     timingBar->advance(step);
+
+    //Sit die collision stamina penalty se stuffs hier
+
+
+    //-----------------------------------------------------------------
+    //    QPointF nextPosX(pos().x(),pos().x()+ velocity.x());
+
+
+    //    QList<QGraphicsItem*> hits = collidingItems();
+
+    //    bool blocked = false;
+
+    //    //Check collision with player
+    //    for (QGraphicsItem* item : hits)
+    //    {
+    //        qDebug() << "Colliding with:" << item;
+    //        Objects* obj = dynamic_cast<Objects*>(item);
+
+    //        if (!obj)
+    //            continue;
+
+    //        if (obj->isSolid())
+    //        {
+    //            blocked = true;
+
+    //        }
+
+    //        obj->onCollision(this);
+    //     }
+
+    //        if (!blocked)
+    //        {
+    //            setPos(nextPos);
+    //        }
+
+    //------Moontlike bounds vir die player se track--------
+
+//    const QRectF bounds(50, 50, 1900, 500);
+//    if (pos().x() < bounds.left())
+//        setPos(bounds.left(), pos().y());
+//    if (pos().x() > bounds.right())
+//        setPos(bounds.right(), pos().y());
+//    if (pos().y() < bounds.top())
+//        setPos(pos().x(), bounds.top());
+//    if (pos().y() > bounds.bottom())
+//        setPos(pos().x(), bounds.bottom());
+    //----------------------------------------------------
+
+    //Na collision handling se goed
+    //if (hitObstacle)
+    //  staminaBar->decrease(8.0f);
+
+
+    frameTick++;
     if (frameTick % 6 == 0)
     {
         player.updateFrame();
@@ -251,4 +324,9 @@ QPainterPath Player::shape() const
     QPainterPath path;
     path.addRect(0,0, 64, 128);
     return path;
+}
+
+float Player::getCurrentSpeedFactor() const
+{
+        return std::sqrt(velocity.x()*velocity.x() + velocity.y()*velocity.y()) / baseSpeed;
 }

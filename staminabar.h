@@ -23,6 +23,7 @@ private:
     QPixmap staminaBar;
 
 
+>>>>>>>>> Temporary merge branch 2
 
 
 };

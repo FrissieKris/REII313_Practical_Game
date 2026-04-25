@@ -1,4 +1,6 @@
 #include "gamescene.h"
+#include "staminabar.h"
+#include "timingbar.h"
 #include <QDebug>
 #include <QRandomGenerator>
 
@@ -12,8 +14,6 @@ GameScene::GameScene()
     //setFocusItem(nullptr);
     //addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
 
-
-
     track = new Track(1920,1080*1000);
     track->setPos(0, -1080*1000);
 
@@ -23,6 +23,7 @@ GameScene::GameScene()
     localPlayer = new Player();
     localPlayer->setPos(960,0);
 
+    //staminaBar = new StaminaBar(localPlayer);
     staminaBar = new StaminaBar(localPlayer);
 
 
@@ -32,6 +33,45 @@ GameScene::GameScene()
 
     remotePlayer = new Player();
     remotePlayer->setPos(800,0);
+
+    //-------------------------Ek position die players hier----------------------
+    //localPlayer->setPos(300, 300);
+    //remotePlayer->setPos(700, 300);
+    //---------------------------------------------------------------------------
+
+    //***********************************************************************************
+
+    //All the stuffs for the Stamina bar
+    //Creates 2 instances, one per player
+
+    // localStaminaBar = new StaminaBar();
+    // addItem(localStaminaBar);
+    // localStaminaBar->setPos(50 , 30); //Can be adjusted later
+
+    // remoteStaminaBar = new StaminaBar();
+    // addItem(remoteStaminaBar);
+    // remoteStaminaBar->setPos(1050,30);
+
+    // localTimingBar = new TimingBar();
+    // addItem(localTimingBar);
+    // localTimingBar->setPos(40, 60);        // below stamina bar on left side
+
+    // remoteTimingBar = new TimingBar();
+    // addItem(remoteTimingBar);
+    // remoteTimingBar->setPos(1040, 60);     // below stamina on right side
+
+    // localPlayer->staminaBar = localStaminaBar;
+    // remotePlayer->staminaBar = remoteStaminaBar;
+
+    // localPlayer->timingBar = localTimingBar;
+    // remotePlayer->timingBar = remoteTimingBar;
+
+    // breathingTimer = new QTimer(this);
+    // connect(breathingTimer, &QTimer::timeout, this, &GameScene::triggerBreathingMinigame);
+    // breathingTimer->start(4000);   // every 4 seconds
+
+    //************************************************************************************************
+   // sand = new Sand(256*1000,256*1000);
 
     sand = new Sand(256*2,256*2);
     sand->setPos(100, -30);
@@ -88,8 +128,8 @@ GameScene::GameScene()
     //qDebug() << "localPlayer:" << localPlayer;
 
     addItem(localPlayer);
-    addItem(staminaBar->border);
-    addItem(staminaBar->fill);
+//    addItem(staminaBar->border);
+//    addItem(staminaBar->fill);
 
 
     //Small window that follows with the player as he/she moves
@@ -98,7 +138,7 @@ GameScene::GameScene()
     {
         QGraphicsScene::advance();
 
-        for (auto view : views())
+        for (auto* view : views())
         {
             //view->centerOn(localPlayer);
             QPointF c1 = localPlayer->pos();
@@ -129,6 +169,74 @@ void GameScene::keyPressEvent(QKeyEvent *e)
     else if (e->key() == Qt::Key_Left)
         localPlayer->movement.left = true;
 
+    //----------------KeyPressTiming vir Stamina Bar and Timing Bar---------------
+    if(e->key() == Qt::Key_Space)
+    {
+
+        //Chuck this in before the minigame to be added
+        if(localPlayer && localPlayer->timingBar && localPlayer->timingBar->isActive())
+        {
+            TimingResult res = localPlayer->timingBar->evaluateHit();
+            localPlayer->timingBar->showResult(res);
+
+
+            if(localPlayer->staminaBar)
+            {
+                if(res == TimingResult::Perfect)
+                    localPlayer->staminaBar->increase(28.0f);
+                else if(res == TimingResult::Good) localPlayer->staminaBar->increase(14.0f);
+                //Miss means no gain
+            }
+            localPlayer->timingBar->deactivate();
+        }
+//        if (localPlayer && localPlayer->timingBar && localPlayer->timingBar->isActive())
+//        {
+//            activePlayer = localPlayer;
+//            activeBar = localPlayer->timingBar;
+//        }
+//        else if (remotePlayer && remotePlayer->timingBar && remotePlayer->timingBar->isActive())
+//        {
+//            activePlayer = remotePlayer;
+//            activeBar = remotePlayer->timingBar;
+//        }
+
+//        if (activeBar && activePlayer)
+//        {
+//            TimingResult result = activeBar->evaluateHit();
+//            activeBar->showResult(result);
+
+//            if (activePlayer->staminaBar)
+//            {
+//                if (result == TimingResult::Perfect)
+//                    activePlayer->staminaBar->increase(28.0f);
+//                else if (result == TimingResult::Good)
+//                    activePlayer->staminaBar->increase(14.0f);
+//                // Miss = small penalty or nothing
+//            }
+
+//            activeBar->deactivate();
+        }
+
+    //--------------------------------------------------------------------------
+
+
+    //-----------------------------------------------------------
+//    if (e->key() == Qt::Key_Right)
+//        localPlayer->movement.right = true;
+//        //localPlayer->setState(Player::MovingRight);
+
+//    else if (e->key() == Qt::Key_Left)
+//        localPlayer->movement.left = true;
+
+//    else if (e->key() == Qt::Key_Up)
+//        localPlayer->movement.up = true;
+
+//    else if (e->key() == Qt::Key_Down)
+//        localPlayer->movement.down = true;
+
+//    else if (e->key() == Qt::Key_Space)
+//        localPlayer->movement.increaseSpeed = true;
+
     else if (e->key() == Qt::Key_Up)
         localPlayer->movement.up = true;
 
@@ -150,7 +258,6 @@ void GameScene::keyPressEvent(QKeyEvent *e)
 
 
 }
-
 //Release key for false
 void GameScene::keyReleaseEvent(QKeyEvent *e)
 {
@@ -172,6 +279,17 @@ void GameScene::keyReleaseEvent(QKeyEvent *e)
         localPlayer->coolDownTimer.start(1000);
     }
 
+}
+
+
+void GameScene::triggerBreathingMinigame()
+{
+    if (localPlayer && localPlayer->timingBar && !localPlayer->timingBar->isActive())
+    {
+        float speedFactor = localPlayer->getCurrentSpeedFactor();
+        localPlayer->timingBar->activate(speedFactor);
+    }
+    // same for remotePlayer
 }
 void GameScene::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
