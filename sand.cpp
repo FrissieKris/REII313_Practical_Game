@@ -1,6 +1,6 @@
 #include "sand.h"
 #include "player.h"
-#include <QTimer>
+//#include <QTimer>
 
 Sand::Sand(int w, int h)
     :sand(":/Sprites/Sprites/Sand/Sand.png", 64, 64, 0, 1), width(w),height(h)

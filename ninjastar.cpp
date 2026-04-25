@@ -35,7 +35,7 @@ void NinjaStar::advance(int step)
         case Unused:
         //ninjaStar.updateFrame();
         setPixmap(ninjaStar.getCurrentFrame());
-            // static or slow spin
+
         break;
 
 

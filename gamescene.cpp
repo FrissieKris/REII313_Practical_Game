@@ -3,13 +3,13 @@
 #include "timingbar.h"
 #include <QDebug>
 #include <QRandomGenerator>
-#include <QtGlobal>
-
 
 
 GameScene::GameScene()
 {
-    //setSceneRect(0, 0, 2000, 600); //Klaar declare in mainwindow.cpp
+
+
+    setSceneRect(0, 0, 2000, 600);
     setFocus();
     //setFocusItem(nullptr);
     //addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
@@ -24,8 +24,15 @@ GameScene::GameScene()
     localPlayer->setPos(960,0);
 
     //staminaBar = new StaminaBar(localPlayer);
+    staminaBar = new StaminaBar(localPlayer);
+
+
+    enemy = new Enemy();
+
+
 
     remotePlayer = new Player();
+    remotePlayer->setPos(800,0);
 
     //-------------------------Ek position die players hier----------------------
     //localPlayer->setPos(300, 300);
@@ -37,34 +44,35 @@ GameScene::GameScene()
     //All the stuffs for the Stamina bar
     //Creates 2 instances, one per player
 
-    localStaminaBar = new StaminaBar();
-    addItem(localStaminaBar);
-    localStaminaBar->setPos(50 , 30); //Can be adjusted later
+    // localStaminaBar = new StaminaBar();
+    // addItem(localStaminaBar);
+    // localStaminaBar->setPos(50 , 30); //Can be adjusted later
 
-    remoteStaminaBar = new StaminaBar();
-    addItem(remoteStaminaBar);
-    remoteStaminaBar->setPos(1050,30);
+    // remoteStaminaBar = new StaminaBar();
+    // addItem(remoteStaminaBar);
+    // remoteStaminaBar->setPos(1050,30);
 
-    localTimingBar = new TimingBar();
-    addItem(localTimingBar);
-    localTimingBar->setPos(40, 60);        // below stamina bar on left side
+    // localTimingBar = new TimingBar();
+    // addItem(localTimingBar);
+    // localTimingBar->setPos(40, 60);        // below stamina bar on left side
 
-    remoteTimingBar = new TimingBar();
-    addItem(remoteTimingBar);
-    remoteTimingBar->setPos(1040, 60);     // below stamina on right side
+    // remoteTimingBar = new TimingBar();
+    // addItem(remoteTimingBar);
+    // remoteTimingBar->setPos(1040, 60);     // below stamina on right side
 
-    localPlayer->staminaBar = localStaminaBar;
-    remotePlayer->staminaBar = remoteStaminaBar;
+    // localPlayer->staminaBar = localStaminaBar;
+    // remotePlayer->staminaBar = remoteStaminaBar;
 
-    localPlayer->timingBar = localTimingBar;
-    remotePlayer->timingBar = remoteTimingBar;
+    // localPlayer->timingBar = localTimingBar;
+    // remotePlayer->timingBar = remoteTimingBar;
 
-    breathingTimer = new QTimer(this);
-    connect(breathingTimer, &QTimer::timeout, this, &GameScene::triggerBreathingMinigame);
-    breathingTimer->start(4000);   // every 4 seconds
+    // breathingTimer = new QTimer(this);
+    // connect(breathingTimer, &QTimer::timeout, this, &GameScene::triggerBreathingMinigame);
+    // breathingTimer->start(4000);   // every 4 seconds
 
     //************************************************************************************************
    // sand = new Sand(256*1000,256*1000);
+
     sand = new Sand(256*2,256*2);
     sand->setPos(100, -30);
 
@@ -78,7 +86,7 @@ GameScene::GameScene()
     ninjaStar = new NinjaStar();
     ninjaStar->setPos(400,100);
 
-    addItem(remotePlayer);
+    //addItem(remotePlayer);
     addItem(track);
 
     addItem(sand);
@@ -86,10 +94,11 @@ GameScene::GameScene()
     addItem(barrier);
     addItem(tree);
     addItem(ninjaStar);
+    addItem(enemy);
 
 
-//    staminaBar->border->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-//    staminaBar->fill->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    staminaBar->border->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    //staminaBar->fill->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 
     //Spawn the powerups, need to be done better
     for (int i = 0; i < 10; ++i)
@@ -103,10 +112,6 @@ GameScene::GameScene()
         addItem(p);
     }
 
-    //qDebug() << "localPlayer:" << localPlayer;
-
-    //addItem(remotePlayer);
-    //addItem(tree);
     for (int i = 0; i < 10; ++i)
     {
         NinjaStar* s = new NinjaStar();
@@ -136,30 +141,15 @@ GameScene::GameScene()
         for (auto* view : views())
         {
             //view->centerOn(localPlayer);
-//            QPointF c1 = localPlayer->pos();
-//            QRectF r1(c1.x() - 200, c1.y() - 300, 400, 600);
-
-
-//            view->setSceneRect(r1);
-//          --------Kan dalk hierdie vervang met hieronder vir slegs centering--------
-//             if(localPlayer)
-//             {
-//                 view->centerOn(localPlayer); //
-//             }
-            //----------------------------------------------------------------------
-//            ------------of hierdie vir net effense centering--------------
-//            QPointF target = localPlayer->pos();
-//            view->setSceneRect(target.x()- 200, target.y() - 300,400,600);
-            //--------------------------------------------------------------
             QPointF c1 = localPlayer->pos();
             QRectF r1(c1.x() - 100, c1.y() - 150, 200, 300);
 
 
 
             view->setSceneRect(r1);
-//            staminaBar->border->setPos(c1.x() - 100, c1.y() - 150);
-//            staminaBar->fill->setPos(c1.x() - 100, c1.y() - 150);
-//            staminaBar->getStaminaLevel(localPlayer->currentStamina);
+            staminaBar->border->setPos(c1.x(), c1.y() - 55);
+            staminaBar->fill->setPos(c1.x() , c1.y() - 55);
+            staminaBar->getStaminaLevel(localPlayer->currentStamina);
 
        }
     });
@@ -172,28 +162,12 @@ GameScene::GameScene()
 //Keyboard input, use true and false and then in Player class check if conditions are met
 void GameScene::keyPressEvent(QKeyEvent *e)
 {
-    //Ek gaan hierso net switchcase insit. Kan aanpas of verander
-    //-----------------------------------------------------------
-    switch(e->key())
-    {
-    case Qt::Key_Right: localPlayer->movement.right = true; break;
-    case Qt::Key_Left:  localPlayer->movement.left  = true; break;
-    case Qt::Key_Up:    localPlayer->movement.up    = true; break;
-    case Qt::Key_Down:  localPlayer->movement.down  = true; break;
-    case Qt::Key_Space:  localPlayer->movement.increaseSpeed = true; break;
-    default: break;
-    }
+    if (e->key() == Qt::Key_Right)
+        localPlayer->movement.right = true;
+        //localPlayer->setState(Player::MovingRight);
 
-    //Hier is die stuff vir remoteplayer solank met ijkl as local input
-    switch(e->key())
-    {
-    case Qt::Key_L:  remotePlayer->movement.right = true; break;
-    case Qt::Key_J:  remotePlayer->movement.left  = true; break;
-    case Qt::Key_I:  remotePlayer->movement.up    = true; break;
-    case Qt::Key_K:  remotePlayer->movement.down  = true; break;
-    case Qt::Key_M:  remotePlayer->movement.increaseSpeed = true; break; //Eers net M ingesit in plaas van space
-    default: break;
-    }
+    else if (e->key() == Qt::Key_Left)
+        localPlayer->movement.left = true;
 
     //----------------KeyPressTiming vir Stamina Bar and Timing Bar---------------
     if(e->key() == Qt::Key_Space)
@@ -263,47 +237,48 @@ void GameScene::keyPressEvent(QKeyEvent *e)
 //    else if (e->key() == Qt::Key_Space)
 //        localPlayer->movement.increaseSpeed = true;
 
+    else if (e->key() == Qt::Key_Up)
+        localPlayer->movement.up = true;
+
+    else if (e->key() == Qt::Key_Down)
+        localPlayer->movement.down = true;
+
+    else if (e->key() == Qt::Key_Space && localPlayer->currentStamina != localPlayer->minStamina && !e->isAutoRepeat())
+    {
+        localPlayer->movement.increaseSpeed = true;
+        localPlayer->currentStamina = localPlayer->currentStamina - 1;
+        localPlayer->coolDownTimer.stop();
+    }
+    else if (e->key() == Qt::Key_Space && localPlayer->currentStamina != localPlayer->minStamina && e->isAutoRepeat())
+    {
+        localPlayer->movement.increaseSpeed = true;
+        localPlayer->currentStamina = localPlayer->currentStamina - 1;
+        localPlayer->coolDownTimer.stop();
+    }
 
 
 }
 //Release key for false
 void GameScene::keyReleaseEvent(QKeyEvent *e)
 {
+    if (e->key() == Qt::Key_Up)
+        localPlayer->movement.up = false;
 
-    //-----------Ek doen dieselfde hier as daar bo--------------
-    switch(e->key())
+    if (e->key() == Qt::Key_Down)
+        localPlayer->movement.down = false;
+
+    if (e->key() == Qt::Key_Left)
+        localPlayer->movement.left = false;
+
+    if (e->key() == Qt::Key_Right)
+        localPlayer->movement.right = false;
+
+    if (e->key() == Qt::Key_Space)
     {
-    case Qt::Key_Right: localPlayer->movement.right = false; break;
-    case Qt::Key_Left:  localPlayer->movement.left  = false; break;
-    case Qt::Key_Up:    localPlayer->movement.up    = false; break;
-    case Qt::Key_Down:  localPlayer->movement.down  = false; break;
-    case Qt::Key_Space:  localPlayer->movement.increaseSpeed = false; break;
-    default: break;
+        localPlayer->movement.increaseSpeed = false;
+        localPlayer->coolDownTimer.start(1000);
     }
 
-    switch(e->key())
-    {
-    case Qt::Key_L:  remotePlayer->movement.right = false; break;
-    case Qt::Key_J:  remotePlayer->movement.left  = false; break;
-    case Qt::Key_I:  remotePlayer->movement.up    = false; break;
-    case Qt::Key_K:  remotePlayer->movement.down  = false; break;
-    case Qt::Key_M:  remotePlayer->movement.increaseSpeed = true; break; //Eers net M ingesit in plaas van space
-    default: break;
-    }
-    //--------------------------------------------------------------------
-//    if (e->key() == Qt::Key_Up)
-//        localPlayer->movement.up = false;
-
-//    if (e->key() == Qt::Key_Down)
-//        localPlayer->movement.down = false;
-
-//    if (e->key() == Qt::Key_Left)
-//        localPlayer->movement.left = false;
-
-//    if (e->key() == Qt::Key_Right)
-//        localPlayer->movement.right = false;
-//    if (e->key() == Qt::Key_Space)
-//        localPlayer->movement.increaseSpeed = false;
 }
 
 

@@ -10,7 +10,6 @@
 #include "tree.h"
 #include "powerups.h"
 #include <QList>
-#include "staminabar.h"
 #include "sand.h"
 #include "grass.h"
 #include "track.h"
@@ -19,7 +18,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include "ninjastar.h"
 #include "staminabar.h"
-
+#include "enemy.h"
 
 class GameScene : public QGraphicsScene
 {
@@ -36,6 +35,7 @@ public:
     TrackBarrier *barrier;
     NinjaStar *ninjaStar;
     StaminaBar *staminaBar;
+    Enemy *enemy;
 
 protected:
     void keyPressEvent(QKeyEvent *e);

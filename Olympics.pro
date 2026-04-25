@@ -25,7 +25,7 @@ SOURCES += \
     timingbar.cpp \
     track.cpp \
     trackbarrier.cpp \
-    tree.cpp
+    tree.cpp \
 
 HEADERS += \
     enemy.h \
@@ -44,12 +44,7 @@ HEADERS += \
     staminabar.h \
     track.h \
     trackbarrier.h
-
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+ \
 
 RESOURCES += \
     Resources.qrc

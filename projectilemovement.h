@@ -4,14 +4,17 @@
 #include <QPointF>
 #include "sprite.h"
 
+
 class ProjectileMovement : public Objects
 {
 
 public:
     ProjectileMovement(QPointF start, QPointF vel);
 
+    Objects* owner = nullptr;
 
     void advance(int step) override;
+
 
 
 private:
@@ -20,7 +23,7 @@ private:
     {
         Flying,
         Hit,
-        Destroyed
+        Idle,
     };
     ProjectileState projectileState;
     Sprite ninjastar;

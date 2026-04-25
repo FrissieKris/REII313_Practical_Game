@@ -4,7 +4,6 @@
 //#include <ninjastar.h>
 #include "sprite.h"
 #include "objects.h"
-#include "staminabar.h"
 #include "timingbar.h"
 #include <QTimer>
 #include "staminabar.h"
@@ -30,14 +29,16 @@ public:
     float getCurrentSpeedFactor() const;
     bool isThrowing = false;
 
-    int currentStamina = 15;
+    int currentStamina = 6;
 
 
     bool itemPickedUp;
     void throwShuriken(QPointF target);
-    int maxStamina = 15;
+    int maxStamina = 6;
+    int minStamina = 0;
 
     QTimer speedTimer;
+    QTimer coolDownTimer;
     MoveMent movement;
 
     QRectF boundingRect() const override;
