@@ -75,7 +75,7 @@ private:
     void setState();
     void updateAnim();
     void collision();
-    StaminaBar *staminaBar;
+
 
 
 

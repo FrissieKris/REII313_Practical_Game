@@ -23,6 +23,7 @@
 
 class GameScene : public QGraphicsScene
 {
+    Q_OBJECT
 public:
     GameScene();
     Player *localPlayer;

@@ -14,8 +14,6 @@ GameScene::GameScene()
     //setFocusItem(nullptr);
     //addRect(-1000, 0, 5000, 10000, QPen(Qt::NoPen), QBrush(Qt::darkGreen));
 
-
-
     track = new Track(1920,1080*1000);
     track->setPos(0, -1080*1000);
 
@@ -25,16 +23,13 @@ GameScene::GameScene()
     localPlayer = new Player();
     localPlayer->setPos(960,0);
 
-    staminaBar = new StaminaBar(localPlayer);
-
-
-
+    //staminaBar = new StaminaBar(localPlayer);
 
     remotePlayer = new Player();
 
     //-------------------------Ek position die players hier----------------------
-    localPlayer->setPos(300, 300);
-    remotePlayer->setPos(700, 300);
+    //localPlayer->setPos(300, 300);
+    //remotePlayer->setPos(700, 300);
     //---------------------------------------------------------------------------
 
     //***********************************************************************************
@@ -93,8 +88,8 @@ GameScene::GameScene()
     addItem(ninjaStar);
 
 
-    staminaBar->border->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    staminaBar->fill->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+//    staminaBar->border->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+//    staminaBar->fill->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 
     //Spawn the powerups, need to be done better
     for (int i = 0; i < 10; ++i)
@@ -110,8 +105,8 @@ GameScene::GameScene()
 
     //qDebug() << "localPlayer:" << localPlayer;
 
-    addItem(remotePlayer);
-    addItem(tree);
+    //addItem(remotePlayer);
+    //addItem(tree);
     for (int i = 0; i < 10; ++i)
     {
         NinjaStar* s = new NinjaStar();
@@ -128,8 +123,8 @@ GameScene::GameScene()
     //qDebug() << "localPlayer:" << localPlayer;
 
     addItem(localPlayer);
-    addItem(staminaBar->border);
-    addItem(staminaBar->fill);
+//    addItem(staminaBar->border);
+//    addItem(staminaBar->fill);
 
 
     //Small window that follows with the player as he/she moves
@@ -162,9 +157,9 @@ GameScene::GameScene()
 
 
             view->setSceneRect(r1);
-            staminaBar->border->setPos(c1.x() - 100, c1.y() - 150);
-            staminaBar->fill->setPos(c1.x() - 100, c1.y() - 150);
-            staminaBar->getStaminaLevel(localPlayer->currentStamina);
+//            staminaBar->border->setPos(c1.x() - 100, c1.y() - 150);
+//            staminaBar->fill->setPos(c1.x() - 100, c1.y() - 150);
+//            staminaBar->getStaminaLevel(localPlayer->currentStamina);
 
        }
     });
