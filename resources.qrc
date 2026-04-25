@@ -9,7 +9,6 @@
         <file>Sprites/TrackBarrier/TrackBarrier.png</file>
         <file>Sprites/Banana/Banana.png</file>
         <file>Sprites/NinjaStar/NinjaStar-Sheet.png</file>
-        <file>Sprites/StaminaBar/Staminabar_border.png</file>
-        <file>Sprites/StaminaBar/Staminabar_fill-Sheet.png</file>
+        <file>Sprites/StaminaBar/Staminabar.png</file>
     </qresource>
 </RCC>

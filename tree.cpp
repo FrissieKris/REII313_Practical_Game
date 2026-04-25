@@ -27,4 +27,5 @@ QPainterPath Tree::shape() const
     QPainterPath path;
     path.addRect(0, 0, 256, 256); // same size as boundingRect
     return path;
+
 }
