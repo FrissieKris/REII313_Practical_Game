@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "gamescene.h"
 #include "player.h"
+#include "mainmenu.h"
+#include "levelmanager.h"
 
 class MainWindow : public QMainWindow
 {
@@ -16,5 +18,12 @@ public:
 
 private:
     GameScene *scene;
+    MainMenu* mainMenuScene = nullptr;
+    LevelManager* levelManager = nullptr;
+    GameScene* currentGameScene = nullptr;
+
+private slots:
+    void startSinglePlayer();
+    void startMultiplayer();
 };
 #endif // MAINWINDOW_H

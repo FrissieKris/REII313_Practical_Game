@@ -182,9 +182,9 @@ void GameScene::keyPressEvent(QKeyEvent *e)
 
             if(localPlayer->staminaBar)
             {
-                if(res == TimingResult::Perfect)
-                    localPlayer->staminaBar->increase(28.0f);
-                else if(res == TimingResult::Good) localPlayer->staminaBar->increase(14.0f);
+                //if(res == TimingResult::Perfect)
+                  //  localPlayer->staminaBar->increase(28.0f);
+                //else if(res == TimingResult::Good) localPlayer->staminaBar->increase(14.0f);
                 //Miss means no gain
             }
             localPlayer->timingBar->deactivate();
